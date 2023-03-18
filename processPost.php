@@ -10,7 +10,9 @@ require("connect.php");
 //     die();
 // }
 $inputError = false;
+$errorMessage = '';
 
+try {
 if ($_POST) {
     print_r($_POST);
     // Check that post is not empty and sanitize
@@ -24,7 +26,7 @@ if ($_POST) {
         $temporary_image_path = $_FILES['image']['tmp_name'];
 
         $image_storageFld = get_image_original(basename($image_filename));
-
+            echo "<br>" . $image_storageFld;
         if (file_is_an_image($temporary_image_path, $image_storageFld)) {
             move_uploaded_file($temporary_image_path, $image_storageFld);
         }
@@ -58,24 +60,33 @@ if ($_POST) {
         'datecreated' => $datecreated->format('Y-m-d H:i:s')
     ];
 
-    $result = $statement->execute($all_bind_values);
-    if (!$result) {
-        die('Error executing query: ' . $statement->errorInfo()[2]);
+        $result = $statement->execute($all_bind_values);
+        if (!$result) {
+            die('Error executing query: ' . $statement->errorInfo()[2]);
+        }
+        header("Location: index.php");
+        exit;
+    } else {
+        throw new Exception('Invalid input. Please fill all the required fields and upload a valid image.');
     }
-    header("Location: index.php");
-    exit;
+} catch (Exception $e) {
+    // Handle exception
+    $inputError = true;
+    $errorMessage = $e->getMessage();
 }
 
 function get_image_original($original_name)
 {
-    $len = strlen(join(DIRECTORY_SEPARATOR, [dirname(__FILE__), BIKEFOLDER, $original_name]));
+    // echo "<br>" . $original_name;
+    // $len = strlen(join(DIRECTORY_SEPARATOR, [dirname(__FILE__), BIKEFOLDER, $original_name]));
 
-    if ($len > 100) {
-        $shortName = join(DIRECTORY_SEPARATOR, [dirname(__FILE__), BIKEFOLDER, substr($original_name, 0, 10) . substr($original_name, -4)]);
-        return $shortName;
-    }
+    // if ($len > 100) {
+    //     $shortName = join(DIRECTORY_SEPARATOR, [dirname(__FILE__), BIKEFOLDER, substr($original_name, 0, 10) . substr($original_name, -4)]);
+    //     return $shortName;
+    // }
 
-    return join(DIRECTORY_SEPARATOR, [dirname(__FILE__), BIKEFOLDER, $original_name]);
+    // return join(DIRECTORY_SEPARATOR, [dirname(__FILE__), BIKEFOLDER, $original_name]);
+    return join(DIRECTORY_SEPARATOR, [BIKEFOLDER, $original_name]);
 }
 
 function file_is_an_image($temporary_path, $new_path)
