@@ -36,8 +36,7 @@ try {
             <ul>
                 <?php foreach ($posts as $post): ?>
                 <li>
-                    <img src=<?= $post['image_url'] ?> alt="<?= $post['make'] ?>" width="100%">
-                    <?= $post['image_url'] ?>
+                    <img src=<?= $post['image_url'] ?> alt="<?= $post['make'] ?>" width="300px">
                     <div>Make:
                         <?= $post['make'] ?>
                     </div>

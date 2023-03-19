@@ -17,15 +17,15 @@
                 <ul>
                     <li>
                         <label for="make">Bike Make</label>
-                        <input id="make" name="make" type="text" required />
+                        <input id="make" name="make" type="text" required maxlength="30" />
                     </li>
                     <li>
                         <label for="model">Bike Model</label>
-                        <input id="model" name="model" type="text" required />
+                        <input id="model" name="model" type="text" required maxlength="20" />
                     </li>
                     <li>
                         <label for="engine">Engine</label>
-                        <input id="engine" name="engine" type="text" required />
+                        <input id="engine" name="engine" type="text" required maxlength="30" />
                     </li>
                     <li>
                         <label for="year">Year</label>
