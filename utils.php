@@ -7,7 +7,7 @@ function getImageUrl($image_name, $image_tmp_name)
     if (file_is_an_image($image_tmp_name, $image_storageFld)) {
         move_uploaded_file($image_tmp_name, $image_storageFld);
     } else {
-        throw new Exception('File Failed to upload. Try again later');
+        throw new Exception('Please note that you should upload a valid image file (jpg or png). File Failed to upload. Try again later');
     }
     return $image_storageFld;
 }

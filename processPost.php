@@ -21,30 +21,18 @@ if ($_POST) {
     if (
         !empty($_POST['make']) && !empty($_POST['model']) && !empty($_POST['engine']) &&
             !empty($_POST['year']) && !empty($_POST['displacement']) && !empty($_FILES['image']['tmp_name']) && !($_FILES['image']['error'] > 0)
-    ) {
-
-            // $image_filename = $_FILES['image']['name'];
-            //     // echo "<br>" . $image_filename;
-            //     $temporary_image_path = $_FILES['image']['tmp_name'];
-
-            // $image_storageFld = get_image_original(basename($image_filename));
+        ) {
             $image_storageFld = getImageUrl($_FILES['image']['name'], $_FILES['image']['tmp_name']);
-            // echo "<br>" . $image_storageFld;
-            // throw new Exception('Test');
-            // if (file_is_an_image($temporary_image_path, $image_storageFld)) {
-            //     move_uploaded_file($temporary_image_path, $image_storageFld);
-            // } else {
-            //         throw new Exception('File Failed to upload. Try again later');
-            //     }
+            
 
         //Sanitize inputs
         $make = filter_input(INPUT_POST, 'make', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $model = filter_input(INPUT_POST, 'model', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $engine = filter_input(INPUT_POST, 'engine', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $displacement = filter_input(INPUT_POST, 'displacement', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $displacement = filter_var($displacement, FILTER_VALIDATE_FLOAT);
         $year = filter_input(INPUT_POST, 'year', FILTER_VALIDATE_INT);
             flagError($year);
-            $displacement = filter_var($displacement, FILTER_VALIDATE_FLOAT);
             flagError($displacement);
         $datecreated = new DateTime();
             $imageURL = $image_storageFld;

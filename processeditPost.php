@@ -33,9 +33,9 @@ try {
                     $model = filter_input(INPUT_POST, 'model', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
                     $engine = filter_input(INPUT_POST, 'engine', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
                     $displacement = filter_input(INPUT_POST, 'displacement', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                    $displacement = filter_var($displacement, FILTER_VALIDATE_FLOAT);
                     $year = filter_input(INPUT_POST, 'year', FILTER_VALIDATE_INT);
                     flagError($year);
-                    $displacement = filter_var($displacement, FILTER_VALIDATE_FLOAT);
                     flagError($displacement);
 
                     if (!empty($_FILES['image']['tmp_name'])) {
