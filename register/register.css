@@ -1,0 +1,8 @@
+.username-available,
+.username-taken {
+    display: none;
+}
+
+main {
+    background: red;
+}

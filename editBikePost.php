@@ -36,7 +36,6 @@ try {
     $invalidRequest = true;
     $errorMessage = $e->getMessage();
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -90,6 +89,11 @@ try {
                     <li>
                         <label for="image">Bike Image</label>
                         <input id="image" name="image" type="file" accept=".png, .jpg, .jpeg" />
+                        <?php if ($post['image_url']): ?>
+                        <label for="removeimage">Do you want to just delete the Image?</label>
+                        <input type="checkbox" id="removeimage" name="removeimage"
+                            onclick="confirm('Are you sure you wish to delete this image?')">
+                        <?php endif ?>
                         <input id="imageOld" name="imageOld" type="text" hidden value="<?= $post['image_url'] ?>">
                     </li>
                     <li>

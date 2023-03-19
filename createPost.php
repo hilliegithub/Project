@@ -41,7 +41,7 @@ require("constants.php");
                     </li>
                     <li>
                         <label for="image">Bike Image</label>
-                        <input id="image" name="image" type="file" accept=".png, .jpg, .jpeg" required />
+                        <input id="image" name="image" type="file" accept=".png, .jpg, .jpeg" />
                     </li>
                     <li>
                         <input id="reset" name="reset" type="reset" />

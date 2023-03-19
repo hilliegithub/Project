@@ -17,15 +17,19 @@ try {
                     !empty($_POST['make']) && !empty($_POST['model']) && !empty($_POST['engine']) &&
                     !empty($_POST['year']) && !empty($_POST['displacement'])
                 ) {
-                    // If an image is present delete the current one then replace it with the new one.
-                    if (!empty($_FILES['image']['tmp_name'])) {
+
+                    if (isset($_POST['removeimage']) && $_POST['removeimage'] === 'on') {
                         $oldimage = filter_input(INPUT_POST, 'imageOld', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-                        if (file_exists($oldimage)) {
-                            unlink($oldimage);
-                            // echo "<br> Deleted old image (FILES-image-name)";
+                        deleteFile($oldimage);
+                        $image_storageFld = null;
+                    } else {
+                        // If an image is present delete the current one then replace it with the new one.
+                        if (!empty($_FILES['image']['tmp_name'])) {
+                            $oldimage = filter_input(INPUT_POST, 'imageOld', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                            deleteFile($oldimage);
+                            // Move new image
+                            $image_storageFld = getImageUrl($_FILES['image']['name'], $_FILES['image']['tmp_name']);
                         }
-                        // Move new image
-                        $image_storageFld = getImageUrl($_FILES['image']['name'], $_FILES['image']['tmp_name']);
                     }
 
                     $id = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
@@ -38,7 +42,7 @@ try {
                     flagError($year);
                     flagError($displacement);
 
-                    if (!empty($_FILES['image']['tmp_name'])) {
+                    if (!empty($_FILES['image']['tmp_name']) || $_POST['removeimage'] === 'on') {
                         $updateQuery = "UPDATE BikePost SET make = :make, model = :model, year = :year, engine = :engine,
                         displacement_ccm = :displacement, image_url = :imageurl
                         WHERE id = :id";
@@ -65,11 +69,12 @@ try {
                     }
 
                     $statement = $db->prepare($updateQuery);
-                    print_r($all_bind_values);
                     $result = $statement->execute($all_bind_values);
                     if (!$result) {
                         die('Error executing query: ' . $statement->errorInfo()[2]);
                     }
+                    header("Location: index.php");
+                    exit;
                 }
 
 

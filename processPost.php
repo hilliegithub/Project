@@ -20,9 +20,14 @@ if ($_POST) {
         
     if (
         !empty($_POST['make']) && !empty($_POST['model']) && !empty($_POST['engine']) &&
-            !empty($_POST['year']) && !empty($_POST['displacement']) && !empty($_FILES['image']['tmp_name']) && !($_FILES['image']['error'] > 0)
+            !empty($_POST['year']) && !empty($_POST['displacement'])
         ) {
-            $image_storageFld = getImageUrl($_FILES['image']['name'], $_FILES['image']['tmp_name']);
+
+            if (!empty($_FILES['image']['tmp_name']) && !($_FILES['image']['error'] > 0)) {
+                $image_storageFld = getImageUrl($_FILES['image']['name'], $_FILES['image']['tmp_name']);
+            } else {
+                $image_storageFld = '';
+            }
             
 
         //Sanitize inputs

@@ -1,6 +1,14 @@
 <?php
 
 define('BIKEFOLDER', 'bikeimages');
+
+function deleteFile($file)
+{
+    if (file_exists($file)) {
+        unlink($file);
+    }
+}
+
 function getImageUrl($image_name, $image_tmp_name)
 {
     $image_storageFld = get_image_original(basename($image_name));
