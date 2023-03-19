@@ -130,7 +130,7 @@ function flagError($value)
 
 <body>
     <main>
-        <?php if (true): ?>
+        <?php if ($inputError): ?>
         <p>
             <?= $errorMessage ?>
         </p>
