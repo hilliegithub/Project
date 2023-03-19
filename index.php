@@ -49,6 +49,11 @@ try {
                     <div>Engine:
                         <?= $post['engine'] ?>
                     </div>
+                    <div>
+                        <a href="editBikePost.php?id=<?= $post['id'] ?>">
+                            Edit This Post
+                        </a>
+                    </div>
                 </li>
                 <?php endforeach ?>
             </ul>
