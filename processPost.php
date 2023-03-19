@@ -23,10 +23,12 @@ if ($_POST) {
     ) {
 
         $image_filename = $_FILES['image']['name'];
-        $temporary_image_path = $_FILES['image']['tmp_name'];
+            // echo "<br>" . $image_filename;
+            $temporary_image_path = $_FILES['image']['tmp_name'];
 
-        $image_storageFld = get_image_original(basename($image_filename));
+            $image_storageFld = get_image_original(basename($image_filename));
             // echo "<br>" . $image_storageFld;
+            // throw new Exception('Test');
         if (file_is_an_image($temporary_image_path, $image_storageFld)) {
             move_uploaded_file($temporary_image_path, $image_storageFld);
         } else {
@@ -83,16 +85,7 @@ if ($_POST) {
 
 function get_image_original($original_name)
 {
-    // echo "<br>" . $original_name;
-    // $len = strlen(join(DIRECTORY_SEPARATOR, [dirname(__FILE__), BIKEFOLDER, $original_name]));
-
-    // if ($len > 100) {
-    //     $shortName = join(DIRECTORY_SEPARATOR, [dirname(__FILE__), BIKEFOLDER, substr($original_name, 0, 10) . substr($original_name, -4)]);
-    //     return $shortName;
-    // }
-
-    // return join(DIRECTORY_SEPARATOR, [dirname(__FILE__), BIKEFOLDER, $original_name]);
-    return join(DIRECTORY_SEPARATOR, [BIKEFOLDER, $original_name]);
+    return join(DIRECTORY_SEPARATOR, [BIKEFOLDER, substr($original_name, 0, strlen($original_name) - 4) . '_' . time() . substr($original_name, -4)]);
 }
 
 function file_is_an_image($temporary_path, $new_path)
