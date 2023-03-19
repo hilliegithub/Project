@@ -1,3 +1,6 @@
+<?php
+require("constants.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,15 +20,16 @@
                 <ul>
                     <li>
                         <label for="make">Bike Make</label>
-                        <input id="make" name="make" type="text" required maxlength="30" />
+                        <input id="make" name="make" type="text" required maxlength="<?= BIKEMAKE_MAX_LENGTH ?>" />
                     </li>
                     <li>
                         <label for="model">Bike Model</label>
-                        <input id="model" name="model" type="text" required maxlength="20" />
+                        <input id="model" name="model" type="text" required maxlength="<?= BIKEMODEL_MAX_LENGTH ?>" />
                     </li>
                     <li>
                         <label for="engine">Engine</label>
-                        <input id="engine" name="engine" type="text" required maxlength="30" />
+                        <input id="engine" name="engine" type="text" required
+                            maxlength="<?= BIKE_ENGINE_MAX_LENGTH ?>" />
                     </li>
                     <li>
                         <label for="year">Year</label>
@@ -37,7 +41,7 @@
                     </li>
                     <li>
                         <label for="image">Bike Image</label>
-                        <input id="image" name="image" type="file" accept=".png, .jpg, .jpeg" />
+                        <input id="image" name="image" type="file" accept=".png, .jpg, .jpeg" required />
                     </li>
                     <li>
                         <input id="reset" name="reset" type="reset" />

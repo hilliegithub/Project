@@ -1,0 +1,6 @@
+<?php
+define("BIKEMAKE_MAX_LENGTH", 30);
+define("BIKEMODEL_MAX_LENGTH", 20);
+define("BIKE_ENGINE_MAX_LENGTH", 30);
+
+?>

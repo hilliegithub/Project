@@ -1,5 +1,6 @@
 <?php
 require("connect.php");
+include("constants.php");
 
 $invalidRequest = false;
 $errorMessage = '';
@@ -16,17 +17,19 @@ try {
             $statement->bindValue('id', $postid, PDO::PARAM_INT);
             $result = $statement->execute();
             if (!$result) {
-                $invalidRequest = true;
                 throw new Exception('Error processing request. Try again Later.');
             }
 
             $post = $statement->fetch();
+            if ($statement->rowCount() !== 1) {
+                throw new Exception('No post found.');
+            }
+
+            // echo "<br>" . print_r($post);
         } else {
-            $invalidRequest = true;
             throw new Exception('Invalid Post ID');
         }
     } else {
-        $invalidRequest = true;
         throw new Exception('Invalid Url.');
     }
 } catch (Exception $e) {
@@ -52,7 +55,7 @@ try {
 <body>
     <main>
         <?php if ($invalidRequest): ?>
-        <p>$errorMessage</p>
+        <p><?=$errorMessage?></p>
         <?php else: ?>
         <form method="post" action="processeditPost.php" enctype="multipart/form-data">
             <fieldset>
@@ -61,17 +64,18 @@ try {
                 <ul>
                     <li>
                         <label for="make">Bike Make</label>
-                        <input id="make" name="make" type="text" value="<?= $post['make'] ?>" required maxlength="30" />
+                        <input id="make" name="make" type="text" value="<?= $post['make'] ?>" required
+                            maxlength="<?= BIKEMAKE_MAX_LENGTH ?>" />
                     </li>
                     <li>
                         <label for="model">Bike Model</label>
                         <input id="model" name="model" type="text" value="<?= $post['model'] ?>" required
-                            maxlength="20" />
+                            maxlength="<?= BIKEMODEL_MAX_LENGTH ?>" />
                     </li>
                     <li>
                         <label for="engine">Engine</label>
                         <input id="engine" name="engine" type="text" value="<?= $post['engine'] ?>" required
-                            maxlength="30" />
+                            maxlength="<?= BIKE_ENGINE_MAX_LENGTH ?>" />
                     </li>
                     <li>
                         <label for="year">Year</label>
@@ -86,6 +90,7 @@ try {
                     <li>
                         <label for="image">Bike Image</label>
                         <input id="image" name="image" type="file" accept=".png, .jpg, .jpeg" />
+                        <input id="imageOld" name="imageOld" type="text" hidden value="<?= $post['image_url'] ?>">
                     </li>
                     <li>
                         <input type="hidden" name="id" value="<?= $post['id'] ?>">
