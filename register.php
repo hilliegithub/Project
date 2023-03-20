@@ -1,6 +1,50 @@
 <?php
 require("connect.php");
 
+try {
+    $processingError = false;
+    $errorMessage = '';
+    if ($_POST) {
+        // print_r($_POST);
+        // throw new Exception('Testing Posting');
+        if (!empty($_POST['username']) && !empty($_POST['email']) && !empty($_POST['password']) && !empty($_POST['confirmpassword'])) {
+            // print_r($_POST);
+
+            if ($_POST['password'] !== $_POST['confirmpassword']) {
+                throw new Exception('Passwords Do not match! Please try again');
+            }
+            $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+            $password = $_POST["password"];
+
+            //Generate random salt for password
+            $salt = bin2hex(random_bytes(16));
+
+            $password_hashed = password_hash($password . $salt, PASSWORD_DEFAULT);
+
+            $query = "INSERT INTO user (username, email, password, salt, isAdmin) VALUES (:username, :email, :password_hashed, :salt, :isadmin)";
+
+            $all_bind_values = [
+                'username' => $username,
+                'email' => $email,
+                'password_hashed' => $password_hashed,
+                'salt' => $salt,
+                'isadmin' => 0
+            ];
+
+            $statement = $db->prepare($query);
+            $result = $statement->execute($all_bind_values);
+            if (!$result) {
+                // die('Error executing query: ' . $statement->errorInfo()[2]);
+                throw new Exception('Insert Failed');
+            }
+
+        }
+    }
+} catch (Exception $e) {
+    $processingError = true;
+    $errorMessage = $e->getMessage();
+}
 ?>
 
 <!DOCTYPE html>
@@ -23,7 +67,7 @@ require("connect.php");
         <div class="username-taken error">
             Sorry this username is taken. Please choose a different username.
         </div>
-        <form action="processedRegister.php" method="post">
+        <form action="register.php" method="post">
             <ul>
                 <li>
                     <label for="username">Username</label>
@@ -48,12 +92,16 @@ require("connect.php");
                     <p class="error" id="password_not_match">* Passwords do not match.</p>
                 </li>
                 <li>
-                    <input id="submit" name="submit" type="submit" />
+                    <button id="submit" name="submit" type="submit">Register</button>
                 </li>
             </ul>
         </form>
+        <?php if ($processingError): ?>
+        <p><?= $errorMessage ?></p>
+        <p><a href="index.php">Back To Home Page</a></p>
+        <?php endif ?>
     </main>
-    <script src="register/register.js"></script>
+    <script src="register/register.js?1"></script>
 </body>
 
 </html>
