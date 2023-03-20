@@ -1,6 +1,7 @@
 <?php
 require("connect.php");
 include("constants.php");
+// require("authenticate.php");
 
 $invalidRequest = false;
 $errorMessage = '';
