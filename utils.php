@@ -19,8 +19,6 @@ function getImageUrl($image_name, $image_tmp_name)
         $image = new ImageResize($image_tmp_name);
         $image->resizeToWidth(RESIZE_VALUE);
         $image->save($image_storageFld);
-        // echo "<br>" . $image_tmp_name;
-        // move_uploaded_file($image_tmp_name, $image_storageFld);
     } else {
         throw new Exception('Please note that you should upload a valid image file (jpg or png). File Failed to upload. Try again later');
     }
@@ -29,9 +27,7 @@ function getImageUrl($image_name, $image_tmp_name)
 
 function get_image_original($original_name)
 {
-    $string = join(DIRECTORY_SEPARATOR, [BIKEFOLDER, substr($original_name, 0, strpos($original_name, ".")) . '_' . time() . substr($original_name, -1 * (strlen($original_name) - strpos($original_name, ".")))]);
-    echo "<br>" . $string;
-    return $string;
+    return join(DIRECTORY_SEPARATOR, [BIKEFOLDER, substr($original_name, 0, strpos($original_name, ".")) . '_' . time() . substr($original_name, -1 * (strlen($original_name) - strpos($original_name, ".")))]);
 }
 
 function file_is_an_image($temporary_path, $new_path)
