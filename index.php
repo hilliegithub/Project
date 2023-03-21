@@ -28,8 +28,8 @@ try {
 </head>
 
 <body>
-    <?php include("navigation.php") ?>
     <main>
+        <?php include("navigation.php") ?>
         <h1>Bike Posts</h1>
         <div id="all-posts">
             <!-- loop through database and print posts  -->
@@ -54,6 +54,9 @@ try {
                     <div>
                         <a href="editBikePost.php?id=<?= $post['id'] ?>">
                             Edit This Post
+                        </a>
+                        <a href="post.php?id=<?= $post['id'] ?>">
+                            View This Post
                         </a>
                     </div>
                 </li>
