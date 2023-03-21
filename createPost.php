@@ -1,5 +1,5 @@
 <?php
-require("authenticate.php");
+// require("authenticate.php");
 require("constants.php");
 ?>
 <!DOCTYPE html>

@@ -25,6 +25,7 @@ if ($_POST) {
 
             if (!empty($_FILES['image']['tmp_name']) && !($_FILES['image']['error'] > 0)) {
                 $image_storageFld = getImageUrl($_FILES['image']['name'], $_FILES['image']['tmp_name']);
+                throw new Exception('Testing Image');
             } else {
                 $image_storageFld = '';
             }
