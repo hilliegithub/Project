@@ -25,7 +25,7 @@ try {
             throw new Exception('Invalid Post');
         }
     } else {
-        header("Location: index.php");
+        header("Location: post.php");
         exit;
     }
 } catch (Exception $e) {
@@ -51,7 +51,7 @@ try {
 <body>
     <main>
         <?php include("navigation.php") ?>
-        <div>
+        <div class="post">
             <h1>
                 <?= $post['make'] ?>
                 <?= $post['model'] ?>
@@ -75,6 +75,17 @@ try {
                 <a href="editBikePost.php?id=<?= $post['id'] ?>">
                     Edit This Post
                 </a>
+            </div>
+        </div>
+        <div id="comment-section">
+            <div class="create-comment">
+                <form action="createComment.php" method="post">
+                    <textarea id="comment" name="comment" rows="6" cols="40" placeholder="What are your thoughts?"
+                        required></textarea>
+                    <input type="text" name="postid" hidden value="<?= $post['id'] ?>">
+                    <input type="text" name="userid" hidden value="none">
+                    <input type="submit" name="submit">
+                </form>
             </div>
         </div>
     </main>
