@@ -3,6 +3,8 @@ require_once("connect.php");
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+$processingError = false;
+
 try {
     if ($_POST) {
         // print_r($_POST);
@@ -13,6 +15,7 @@ try {
         $datecreated = new DateTime();
         if ($userid === false || $userid === null) {
             $anony = true;
+            $userid = null;
         } else {
             $anony = false;
         }
@@ -26,13 +29,15 @@ try {
             'userid' => $userid,
             'postid' => $postid
         ];
-        print_r($all_bind_values);
+        // print_r($all_bind_values);
         $stmt = $db->prepare($query);
         $result = $stmt->execute($all_bind_values);
         // throw new Exception('Testing');
         if (!$result) {
             throw new Exception('Error processing this request');
         }
+        header("Location: post.php?id=" . $postid);
+        exit;
     }
 } catch (Exception $e) {
     $processingError = true;

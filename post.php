@@ -20,6 +20,12 @@ try {
                 throw new Exception('Error processing request. Please try again later');
             }
             $post = $stmt->fetch();
+
+            $getCommentsQuery = "SELECT * FROM comments WHERE BikePostID = :postid ORDER BY date_created DESC";
+            $dbObject = $db->prepare($getCommentsQuery);
+            $dbObject->bindValue('postid', $postid);
+            $dbObject->execute();
+            $comments = $dbObject->fetchAll();
             // print_r($post);
         } else {
             throw new Exception('Invalid Post');
@@ -86,6 +92,13 @@ try {
                     <input type="text" name="userid" hidden value="none">
                     <input type="submit" name="submit">
                 </form>
+            </div>
+            <div class="postedComments">
+                <?php foreach ($comments as $comment): ?>
+                <p>
+                    <?= $comment['content'] ?>
+                </p>
+                <?php endforeach ?>
             </div>
         </div>
     </main>
