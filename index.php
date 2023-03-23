@@ -5,6 +5,11 @@ ini_set('display_errors', 1);
 require("connect.php");
 $inputError = false;
 $errorMessage = '';
+$loginMessage = '';
+
+if (isset($_SESSION['user_id']) && isset($_COOKIE['loginMessage'])) {
+    $loginMessage = filter_var($_COOKIE['loginMessage'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+}
 
 try {
     $query = "SELECT * FROM Bikepost ORDER BY date_created DESC";
@@ -31,6 +36,13 @@ try {
 
 <body>
     <main>
+        <?php if ($loginMessage): ?>
+        <div>
+            <p>
+                <?= $loginMessage ?>
+            </p>
+        </div>
+        <?php endif ?>
         <?php include("navigation.php") ?>
         <h1>Bike Posts</h1>
         <div id="all-posts">

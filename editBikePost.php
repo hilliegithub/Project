@@ -4,13 +4,16 @@ ini_set('display_errors', 1);
 session_start();
 require_once("connect.php");
 include("constants.php");
-
+$loginMessage = '';
 
 //Check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
     $_SESSION['redirect_url'] = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL);
     header("Location: login.php");
     exit();
+} else {
+    if (isset($_COOKIE['loginMessage']))
+        $loginMessage = filter_var($_COOKIE['loginMessage'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 }
 
 $invalidRequest = false;
@@ -64,6 +67,13 @@ try {
 
 <body>
     <main>
+        <?php if ($loginMessage): ?>
+        <div>
+            <p>
+                <?= $loginMessage ?>
+            </p>
+        </div>
+        <?php endif ?>
         <?php include("navigation.php") ?>
         <?php if ($invalidRequest): ?>
         <p><?=$errorMessage?></p>

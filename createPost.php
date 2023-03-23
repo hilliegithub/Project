@@ -1,17 +1,20 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 session_start();
 require_once("constants.php");
-
+$loginMessage = '';
 
 //Check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
     $_SESSION['redirect_url'] = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL);
     header("Location: login.php");
     exit();
+} else {
+    if (isset($_COOKIE['loginMessage']))
+        $loginMessage = filter_var($_COOKIE['loginMessage'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 }
-
 // print_r($_SESSION);
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,8 +27,15 @@ if (!isset($_SESSION['user_id'])) {
 </head>
 
 <body>
-    <?php include("navigation.php") ?>
     <main>
+        <?php if ($loginMessage): ?>
+        <div>
+            <p>
+                <?= $loginMessage ?>
+            </p>
+        </div>
+        <?php endif ?>
+        <?php include("navigation.php") ?>
         <form action="processPost.php" method="post" enctype="multipart/form-data">
             <fieldset>
                 <legend>Upload all bike details</legend>

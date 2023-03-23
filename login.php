@@ -30,6 +30,7 @@ try {
                 $_SESSION['user_id'] = $result['userID'];
                 $_SESSION['user'] = $result['username'];
                 $_SESSION['isAdmin'] = $result['isAdmin'];
+                setcookie("loginMessage", "Welcome back " . $result['username'] . "! You have successfully logged in.", time() + 5);
             } else {
                 unset($_SESSION['user_id']);
                 unset($_SESSION['user']);
