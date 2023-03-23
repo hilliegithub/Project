@@ -1,4 +1,5 @@
 <?php
+session_start();
 require('connect.php');
 $processingError = false;
 
@@ -88,8 +89,19 @@ try {
                 <form action="createComment.php" method="post">
                     <textarea id="comment" name="comment" rows="6" cols="40" placeholder="What are your thoughts?"
                         required></textarea>
-                    <input type="text" name="postid" hidden value="<?= $post['id'] ?>">
+                    <?php if (!isset($_SESSION['user_id'])): ?>
+
+                    <input type="text" name="commenter" id="commenter" placeholder="Tell us your name" required>
                     <input type="text" name="userid" hidden value="none">
+
+                    <?php else: ?>
+
+                    <input type="text" name="commenter" id="commenter" hidden value="<?= $_SESSION['user'] ?>">
+                    <input type="text" name="userid" hidden value="<?= $_SESSION['user_id'] ?>">
+
+                    <?php endif ?>
+
+                    <input type="text" name="postid" hidden value="<?= $post['id'] ?>">
                     <input type="submit" name="submit">
                 </form>
             </div>

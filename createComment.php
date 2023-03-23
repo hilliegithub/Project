@@ -10,6 +10,7 @@ try {
         // print_r($_POST);
 
         $content = filter_input(INPUT_POST, 'comment', FILTER_SANITIZE_SPECIAL_CHARS);
+        $commenter = filter_input(INPUT_POST, 'commenter', FILTER_SANITIZE_SPECIAL_CHARS);
         $userid = filter_input(INPUT_POST, 'userid', FILTER_VALIDATE_INT);
         $postid = filter_input(INPUT_POST, 'postid', FILTER_VALIDATE_INT);
         $datecreated = new DateTime();
@@ -17,22 +18,25 @@ try {
             $anony = true;
             $userid = null;
         } else {
-            $anony = false;
+            $anony = 0;
         }
-        $query = "INSERT INTO comments (content, date_created,is_anonymous, userID, BikePostID)
-        VALUES (:content, :datecreated, :anony, :userid, :postid)";
+        echo "<br>" . $userid;
+        echo "<br>" . $anony;
+        $query = "INSERT INTO comments (content, date_created, is_anonymous, commenter, userID, BikePostID)
+        VALUES (:content, :datecreated, :anony, :commenter, :userid, :postid)";
 
         $all_bind_values = [
             'content' => $content,
             'datecreated' => $datecreated->format('Y-m-d H:i:s'),
             'anony' => $anony,
+            'commenter' => $commenter,
             'userid' => $userid,
             'postid' => $postid
         ];
         // print_r($all_bind_values);
+        // throw new Exception('Testing');
         $stmt = $db->prepare($query);
         $result = $stmt->execute($all_bind_values);
-        // throw new Exception('Testing');
         if (!$result) {
             throw new Exception('Error processing this request');
         }
