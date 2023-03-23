@@ -1,6 +1,6 @@
 <?php
 session_start();
-require("constants.php");
+require_once("constants.php");
 
 
 //Check if the user is logged in
@@ -10,7 +10,7 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-print_r($_SESSION);
+// print_r($_SESSION);
 
 ?>
 <!DOCTYPE html>
@@ -56,7 +56,8 @@ print_r($_SESSION);
                         <input id="image" name="image" type="file" accept=".png, .jpg, .jpeg" />
                     </li>
                     <li>
-                        <input id="reset" name="reset" type="reset" />
+                        <input name="userid" hidden value="<?= $_SESSION['user_id'] ?>" /> <input id="reset"
+                            name="reset" type="reset" />
                         <input id="submit" name="submit" type="submit" />
                     </li>
                 </ul>

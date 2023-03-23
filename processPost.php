@@ -43,11 +43,15 @@ if ($_POST) {
         $datecreated = new DateTime();
             $imageURL = $image_storageFld;
 
+            $userid = filter_var($_POST['userid'], FILTER_SANITIZE_NUMBER_INT);
+            // print_r($_POST);
+            // throw new Exception("SOMETHING");
+
             // MODIFY FOR USERID!!!!!!!
 
             $insertQuery = "INSERT INTO BikePost (make , model , year, engine, 
         displacement_ccm, image_url, userID, date_created) VALUES (:make, :model, :year, :engine, 
-        :displacement, :image_url, 1, :datecreated)";
+        :displacement, :image_url, :userid, :datecreated)";
 
             $statement = $db->prepare($insertQuery);
             $all_bind_values = [
@@ -57,6 +61,7 @@ if ($_POST) {
                 'engine' => $engine,
                 'displacement' => $displacement,
                 'image_url' => $imageURL,
+                'userid' => $userid,
                 'datecreated' => $datecreated->format('Y-m-d H:i:s')
             ];
 

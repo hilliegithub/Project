@@ -1,7 +1,17 @@
 <?php
-require("connect.php");
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+session_start();
+require_once("connect.php");
 include("constants.php");
-// require("authenticate.php");
+
+
+//Check if the user is logged in
+if (!isset($_SESSION['user_id'])) {
+    $_SESSION['redirect_url'] = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL);
+    header("Location: login.php");
+    exit();
+}
 
 $invalidRequest = false;
 $errorMessage = '';
@@ -54,6 +64,7 @@ try {
 
 <body>
     <main>
+        <?php include("navigation.php") ?>
         <?php if ($invalidRequest): ?>
         <p><?=$errorMessage?></p>
         <?php else: ?>
