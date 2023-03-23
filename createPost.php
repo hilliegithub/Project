@@ -1,6 +1,17 @@
 <?php
-// require("authenticate.php");
+session_start();
 require("constants.php");
+
+
+//Check if the user is logged in
+if (!isset($_SESSION['user_id'])) {
+    $_SESSION['redirect_url'] = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL);
+    header("Location: login.php");
+    exit();
+}
+
+print_r($_SESSION);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
