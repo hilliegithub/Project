@@ -35,8 +35,7 @@ try {
             $statement = $db->prepare($query);
             $result = $statement->execute($all_bind_values);
             if (!$result) {
-                // die('Error executing query: ' . $statement->errorInfo()[2]);
-                throw new Exception('Insert Failed');
+                throw new Exception('Error while processing registration. Please try again later.');
             }
 
         }

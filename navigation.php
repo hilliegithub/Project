@@ -8,5 +8,8 @@
         <?php else: ?>
         <li><a href="logout.php">Logout</a></li>
         <?php endif ?>
+        <?php if (isset($_SESSION['user_id']) && ($_SESSION['isAdmin'] === 1)): ?>
+        <li><a href="manageUsers.php">Manage Users</a></li>
+        <?php endif ?>
     </ul>
 </nav>

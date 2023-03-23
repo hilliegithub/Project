@@ -47,8 +47,6 @@ if ($_POST) {
             // print_r($_POST);
             // throw new Exception("SOMETHING");
 
-            // MODIFY FOR USERID!!!!!!!
-
             $insertQuery = "INSERT INTO BikePost (make , model , year, engine, 
         displacement_ccm, image_url, userID, date_created) VALUES (:make, :model, :year, :engine, 
         :displacement, :image_url, :userid, :datecreated)";

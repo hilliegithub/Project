@@ -1,9 +1,10 @@
 <?php
 session_start();
-require('connect.php');
+require_once('connect.php');
 $processingError = false;
 
 try {
+    // Checks if this is a valid page being requested else redirect to home page.
     if ($_GET && !empty($_GET['id'])) {
         $postid = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
         // Minimun valid integer number is 0
@@ -32,7 +33,7 @@ try {
             throw new Exception('Invalid Post');
         }
     } else {
-        header("Location: post.php");
+        header("Location: index.php");
         exit;
     }
 } catch (Exception $e) {
