@@ -93,8 +93,11 @@ try {
                         false
                         <?php endif ?>
                     </td>
-                    <td><button id="editbtn<?= $user['userID'] ?>">Edit</button></td>
-                    <td><button id="removebtn<?= $user['userID'] ?>">Remove</button></td>
+                    <td>
+                        <button class="edit-button" data-user-id="<?= $user['userID'] ?>">Edit</button>
+                        <button class="remove-button" data-user-id="<?php echo $user['userID']; ?>">Remove</button>
+                    </td>
+
                 </tr>
                 <?php endforeach ?>
             </tbody>
@@ -102,6 +105,7 @@ try {
         </table>
         <?php endif ?>
     </main>
+    <script src="scripts/manageUsers.js?1"></script>
 </body>
 
 </html>
