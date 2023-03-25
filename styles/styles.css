@@ -1,0 +1,7 @@
+.passwordlist {
+    display: none;
+}
+
+.passwordlist.show {
+    display: block;
+}

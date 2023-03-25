@@ -67,45 +67,35 @@ try {
         <p><a href="index.php">Back To Home Page</a></p>
         <?php else: ?>
         <h1>Manage All Users</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>Username</th>
-                    <th>Email</th>
-                    <th>Administrator</th>
-                    <ht></ht>
-                    <ht></ht>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($users as $user): ?>
-                <tr id="<?= $user['userID'] ?>">
-                    <td>
-                        <?php echo $user['username']; ?>
-                    </td>
-                    <td>
-                        <?php echo $user['email']; ?>
-                    </td>
-                    <td>
-                        <?php if ($user['isAdmin'] === 1): ?>
-                        true
-                        <?php else: ?>
-                        false
-                        <?php endif ?>
-                    </td>
-                    <td>
-                        <button class="edit-button" data-user-id="<?= $user['userID'] ?>">Edit</button>
-                        <button class="remove-button" data-user-id="<?php echo $user['userID']; ?>">Remove</button>
-                    </td>
+        <?php foreach ($users as $user): ?>
+        <div class="each-user" style="border: 1px solid black; margin-bottom: 10px;">
+            <p>
+                Username:
+                <?php echo $user['username']; ?>
+            </p>
+            <p>
+                Email Address:
+                <?php echo $user['email']; ?>
+            </p>
 
-                </tr>
-                <?php endforeach ?>
-            </tbody>
+            <p> Adminstrator?
+                <?php if ($user['isAdmin'] === 1): ?>
+                True
+                <?php else: ?>
+                False
+                <?php endif ?>
+            </p>
+            <p>
+                <button class="edit-button">
+                    <a href="manageUserProcess.php?id=<?= $user['userID'] ?>">Edit</a>
+                </button>
+            </p>
 
-        </table>
+        </div id="<?= $user['userID'] ?>">
+        <?php endforeach ?>
+
         <?php endif ?>
     </main>
-    <script src="scripts/manageUsers.js?1"></script>
 </body>
 
 </html>
