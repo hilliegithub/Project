@@ -1,7 +1,9 @@
 <nav>
     <ul>
         <li><a href="index.php">Home</a></li>
+        <?php if (!isset($_SESSION['user_id'])): ?>
         <li><a href="register.php">Register</a></li>
+        <?php endif ?>
         <li><a href="createPost.php">Create Post</a></li>
         <?php if (!isset($_SESSION['user_id'])): ?>
         <li><a href="login.php">Login</a></li>

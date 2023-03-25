@@ -108,13 +108,21 @@ try {
             </div>
             <div class="postedComments">
                 <?php foreach ($comments as $comment): ?>
-                <p>
-                    <?= $comment['content'] ?>
-                </p>
+                <div class="posted-comments">
+                    <p>
+                        <?= $comment['content'] ?>
+                    </p>
+                    <p>
+                        <span>posted by: </span><?= $comment['commenter'] ?>
+                        <input type="checkbox" id="makehidden" name="makehidden"
+                            data-commentid="<?= $comment['commentID'] ?>">
+                    </p>
+                </div>
                 <?php endforeach ?>
             </div>
         </div>
     </main>
+    <script src=" scripts/comments.js?1"></script>
 </body>
 
 </html>

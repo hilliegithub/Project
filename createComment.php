@@ -20,10 +20,10 @@ try {
         } else {
             $anony = 0;
         }
-        echo "<br>" . $userid;
-        echo "<br>" . $anony;
-        $query = "INSERT INTO comments (content, date_created, is_anonymous, commenter, userID, BikePostID)
-        VALUES (:content, :datecreated, :anony, :commenter, :userid, :postid)";
+        // echo "<br>" . $userid;
+        // echo "<br>" . $anony;
+        $query = "INSERT INTO comments (content, date_created, is_anonymous, commenter, userID, BikePostID, hidden)
+        VALUES (:content, :datecreated, :anony, :commenter, :userid, :postid, 0)";
 
         $all_bind_values = [
             'content' => $content,

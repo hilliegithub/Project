@@ -94,48 +94,50 @@ try {
                     $file = $statement->fetch()['image_url'];
                     if (file_exists($file)) {
                         if (!unlink($file)) {
-                            if ($_POST) {
-                                // print_r($_POST);
+                            // if ($_POST) {
+                            //     // print_r($_POST);
 
-                                $content = filter_input(INPUT_POST, 'comment', FILTER_SANITIZE_SPECIAL_CHARS);
-                                $commenter = filter_input(INPUT_POST, 'commenter', FILTER_SANITIZE_SPECIAL_CHARS);
-                                $userid = filter_input(INPUT_POST, 'userid', FILTER_VALIDATE_INT);
-                                $postid = filter_input(INPUT_POST, 'postid', FILTER_VALIDATE_INT);
-                                $datecreated = new DateTime();
-                                if ($userid === false || $userid === null) {
-                                    $anony = true;
-                                    $userid = null;
-                                } else {
-                                    $anony = 0;
-                                }
-                                echo "<br>" . $userid;
-                                echo "<br>" . $anony;
-                                $query = "INSERT INTO comments (content, date_created, is_anonymous, commenter, userID, BikePostID)
-                                VALUES (:content, :datecreated, :anony, :commenter, :userid, :postid)";
+                            //     throw new Exception('testing');
+                            //     $content = filter_input(INPUT_POST, 'comment', FILTER_SANITIZE_SPECIAL_CHARS);
+                            //     $commenter = filter_input(INPUT_POST, 'commenter', FILTER_SANITIZE_SPECIAL_CHARS);
+                            //     $userid = filter_input(INPUT_POST, 'userid', FILTER_VALIDATE_INT);
+                            //     $postid = filter_input(INPUT_POST, 'postid', FILTER_VALIDATE_INT);
+                            //     $datecreated = new DateTime();
+                            //     if ($userid === false || $userid === null) {
+                            //         $anony = true;
+                            //         $userid = null;
+                            //     } else {
+                            //         $anony = 0;
+                            //     }
+                            //     echo "<br>" . $userid;
+                            //     echo "<br>" . $anony;
+                            //     $query = "INSERT INTO comments (content, date_created, is_anonymous, commenter, userID, BikePostID)
+                            //     VALUES (:content, :datecreated, :anony, :commenter, :userid, :postid)";
 
-                                $all_bind_values = [
-                                    'content' => $content,
-                                    'datecreated' => $datecreated->format('Y-m-d H:i:s'),
-                                    'anony' => $anony,
-                                    'commenter' => $commenter,
-                                    'userid' => $userid,
-                                    'postid' => $postid
-                                ];
-                                // print_r($all_bind_values);
-                                // throw new Exception('Testing');
-                                $stmt = $db->prepare($query);
-                                $result = $stmt->execute($all_bind_values);
-                                if (!$result) {
-                                    throw new Exception('Error processing this request');
-                                }
-                                header("Location: post.php?id=" . $postid);
-                                exit;
-                            }
+                            //     $all_bind_values = [
+                            //         'content' => $content,
+                            //         'datecreated' => $datecreated->format('Y-m-d H:i:s'),
+                            //         'anony' => $anony,
+                            //         'commenter' => $commenter,
+                            //         'userid' => $userid,
+                            //         'postid' => $postid
+                            //     ];
+                            //     // print_r($all_bind_values);
+                            //     // throw new Exception('Testing');
+                            //     $stmt = $db->prepare($query);
+                            //     $result = $stmt->execute($all_bind_values);
+                            //     if (!$result) {
+                            //         throw new Exception('Error processing this request');
+                            //     }
+                            //     header("Location: post.php?id=" . $postid);
+                            //     exit;
+                            // }
                         }
-                    } else {
-                        throw new Exception('Error while deleting post. No image found.');
                     }
-
+                    // else {
+                    //     throw new Exception('Error while deleting post. No image found.');
+                    // }
+                   
                     //Build query to delete record
                     $query = "DELETE FROM BikePost WHERE id = :id LIMIT 1";
                     $statement = $db->prepare($query);
