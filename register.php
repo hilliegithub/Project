@@ -59,6 +59,7 @@ try {
 
 <body>
     <main>
+        <?php include("navigation.php") ?>
         <h1>User Sign Up</h1>
         <div class="username-available">
             Username is available. Please continue to fill out the form.
@@ -100,7 +101,7 @@ try {
         <p><a href="index.php">Back To Home Page</a></p>
         <?php endif ?>
     </main>
-    <script src="register/register.js?1"></script>
+    <script src="scripts/register.js?1"></script>
 </body>
 
 </html>

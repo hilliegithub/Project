@@ -1,15 +1,19 @@
+// Script borrowed from: https://github.com/StungEye-RRC/AJAX-Username/blob/master/web/main.js
+
 // Hides or shows the username available and the username taken
 // messages using CSS block property.
 function usernameMessage(usernameAvailable) {
-    let usernameAvailableMsg = document.querySelector('.username-available-msg');
-    let usernameTakenMsg = document.querySelector('.username-taken-msg');
+    let usernameAvailableMsg = document.querySelector('.username-available');
+    let usernameTakenMsg = document.querySelector('.username-taken');
   
     if (usernameAvailable) {
       usernameAvailableMsg.style.display = 'block';
       usernameTakenMsg.style.display = 'none';
+      registerBtn.disabled = false;
     } else {
       usernameAvailableMsg.style.display = 'none';
       usernameTakenMsg.style.display = 'block';
+      registerBtn.disabled = true;
     }
   }
   
@@ -44,5 +48,6 @@ function usernameMessage(usernameAvailable) {
   
   // Bind the checkUsername function to the onblur event of the username input.
   // When this input loses focus this function will be executed.
-  let inputUsername = document.querySelector('#inputUsername');
+  let inputUsername = document.querySelector('#username');
+  let registerBtn = document.querySelector('#submit');
   inputUsername.onblur = checkUsername;
