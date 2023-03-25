@@ -6,20 +6,41 @@ require("connect.php");
 $inputError = false;
 $errorMessage = '';
 $loginMessage = '';
+$sorting = ['date_created', 'make', 'year'];
+$sortOption = '';
 
 if (isset($_SESSION['user_id']) && isset($_COOKIE['loginMessage'])) {
     $loginMessage = filter_var($_COOKIE['loginMessage'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 }
 
+
 try {
-    $query = "SELECT * FROM Bikepost ORDER BY date_created DESC";
-    $statement = $db->prepare($query);
-    $statement->execute();
-    $posts = $statement->fetchAll();
+    if (!isset($_COOKIE['sort']) || !isset($_SESSION['user_id'])) {
+        setcookie('sort', $sorting[0], time() + 3600);
+        $sortOption = $sorting[0];
+    } else {
+        $sortOption = filter_var($_COOKIE['sort'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        if (!in_array($sortOption, $sorting)) {
+            $sortOption = $sorting[0];
+            setcookie('sort', $sorting[0], time() + 3600);
+        }
+    }
+    $posts = getPostList($sortOption, $db);
 } catch (Exception $e) {
     // Handle exception
     $inputError = true;
     $errorMessage = $e->getMessage();
+}
+
+function getPostList($option, $obj)
+{
+    $query = "SELECT * FROM Bikepost ORDER BY " . $option . " DESC";
+    $statement = $obj->prepare($query);
+    $result = $statement->execute();
+    if (!$result)
+        throw new Exception("Error while retrieving data. Please try again later.");
+    return $statement->fetchAll();
+
 }
 ?>
 
@@ -46,6 +67,20 @@ try {
         <?php include("navigation.php") ?>
         <h1>Bike Posts</h1>
         <div id="all-posts">
+            <?php if (isset($_SESSION['user_id'])): ?>
+            <div>
+                <form>
+                    <legend>Sort By:</legend>
+                    <input type="radio" name="sort" value="date_created"
+                        <?= $sortOption === 'date_created' ? 'checked' : '' ?> />
+                    <label for="date_created">Post Date</label>
+                    <input type="radio" name="sort" value="make" <?= $sortOption === 'make' ? 'checked' : '' ?> />
+                    <label for="make">Manufacture</label>
+                    <input type="radio" name="sort" value="year" <?= $sortOption === 'year' ? 'checked' : '' ?> />
+                    <label for="year">Model Year</label>
+                </form>
+            </div>
+            <?php endif ?>
             <!-- loop through database and print posts  -->
             <ul>
                 <?php foreach ($posts as $post): ?>
@@ -78,7 +113,7 @@ try {
             </ul>
         </div>
     </main>
-    <!-- <script type="text/javascript" src="globalJs.js"></script> -->
+    <script type="text/javascript" src="scripts/index.js"></script>
 </body>
 
 </html>
