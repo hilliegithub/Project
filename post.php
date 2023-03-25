@@ -108,16 +108,39 @@ try {
             </div>
             <div class="postedComments">
                 <?php foreach ($comments as $comment): ?>
-                <div class="posted-comments">
+                <?php if (($_SESSION['isAdmin'] === 1) && ($comment['hidden'] === 1)): ?>
+                <!-- if you are an admin and the comment is deemed hidden still display -->
+                <div class="posted-comment" style="border: 1px solid black; margin-bottom: 10px;">
                     <p>
                         <?= $comment['content'] ?>
                     </p>
                     <p>
-                        <span>posted by: </span><?= $comment['commenter'] ?>
+                        <span>posted by: </span>
+                        <?= $comment['commenter'] ?>
+                        <?php if (isset($_SESSION['user_id']) && ($_SESSION['isAdmin'] === 1)): ?>
                         <input type="checkbox" id="makehidden" name="makehidden"
-                            data-commentid="<?= $comment['commentID'] ?>">
+                            data-commentid="<?= $comment['commentID'] ?>"
+                            <?= $comment['hidden'] === 1 ? 'checked' : '' ?>>
+                        <?php endif ?>
                     </p>
                 </div>
+                <?php else: ?>
+                <?php if (($_SESSION['isAdmin'] !== 1) && ($comment['hidden'] === 1)): ?>
+                <!-- if you are not an admin and the comment is deemed hidden do not display -->
+                <?php else: ?>
+                <!-- otherwise it should be good to display -->
+                <div class="posted-comment" style="border: 1px solid black; margin-bottom: 10px;">
+                    <p>
+                        <?= $comment['content'] ?>
+                    </p>
+                    <p>
+                        <span>posted by: </span>
+                        <?= $comment['commenter'] ?>
+                    </p>
+                </div>
+                <?php endif ?>
+                <?php endif ?>
+
                 <?php endforeach ?>
             </div>
         </div>

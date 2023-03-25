@@ -1,4 +1,7 @@
 <nav>
+    <?php if (isset($_SESSION['user_id'])): ?>
+    <?= $_SESSION['user'] ?>
+    <?php endif ?>
     <ul>
         <li><a href="index.php">Home</a></li>
         <?php if (!isset($_SESSION['user_id'])): ?>
