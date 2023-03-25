@@ -136,6 +136,11 @@ try {
                     <p>
                         <span>posted by: </span>
                         <?= $comment['commenter'] ?>
+                        <?php if (isset($_SESSION['user_id']) && ($_SESSION['isAdmin'] === 1)): ?>
+                        <input type="checkbox" id="makehidden" name="makehidden"
+                            data-commentid="<?= $comment['commentID'] ?>"
+                            <?= $comment['hidden'] === 1 ? 'checked' : '' ?>>
+                        <?php endif ?>
                     </p>
                 </div>
                 <?php endif ?>
