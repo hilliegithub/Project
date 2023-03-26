@@ -13,3 +13,17 @@ fileInput.addEventListener('change', (event) => {
       label.innerHTML = fileName;
   }
 });
+
+
+// editBikePost shares this javascript
+// const removeImageCheckBox = document.querySelector('#removeimage');
+
+// // Add event listener to listen for checkbox click
+// removeImageCheckBox.addEventListener('click', (event) => {
+//   if(event.target.checked == true){
+//     onclick="confirm('Are you sure you wish to delete this image?')"
+//   }
+//   else{
+//     console.log("false");
+//   }
+// })
