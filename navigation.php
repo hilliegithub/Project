@@ -1,20 +1,28 @@
-<nav>
+<nav class="navbar navbar-expand-md navbar-light bg-light">
+    <a class="navbar-brand" href="index.php">Home</a>
     <?php if (isset($_SESSION['user_id'])): ?>
-    <?= $_SESSION['user'] ?>
+    <div>Hello
+        <?= $_SESSION['user'] ?>!
+    </div>
     <?php endif ?>
-    <ul>
-        <li><a href="index.php">Home</a></li>
-        <?php if (!isset($_SESSION['user_id'])): ?>
-        <li><a href="register.php">Register</a></li>
-        <?php endif ?>
-        <li><a href="createPost.php">Create Post</a></li>
-        <?php if (!isset($_SESSION['user_id'])): ?>
-        <li><a href="login.php">Login</a></li>
-        <?php else: ?>
-        <li><a href="logout.php">Logout</a></li>
-        <?php endif ?>
-        <?php if (isset($_SESSION['user_id']) && ($_SESSION['isAdmin'] === 1)): ?>
-        <li><a href="manageUsers.php">Manage Users</a></li>
-        <?php endif ?>
-    </ul>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            <?php if (!isset($_SESSION['user_id'])): ?>
+            <a class="nav-item nav-link active" href="register.php">Register <span class="sr-only">(current)</span></a>
+            <?php endif ?>
+            <a class="nav-item nav-link" href="createPost.php">Create Post</a>
+            <?php if (!isset($_SESSION['user_id'])): ?>
+            <a class="nav-item nav-link" href="login.php">Login</a>
+            <?php else: ?>
+            <a class="nav-item nav-link" href="logout.php">Logout</a>
+            <?php endif ?>
+            <?php if (isset($_SESSION['user_id']) && ($_SESSION['isAdmin'] === 1)): ?>
+            <a class="nav-item nav-link disabled" href="manageUsers.php">Manage Users</a>
+            <?php endif ?>
+        </div>
+    </div>
 </nav>

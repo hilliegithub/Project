@@ -53,64 +53,78 @@ function getPostList($option, $obj)
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles/styles.css?1">
     <title>Hylton's Bike Club</title>
 </head>
 
 <body>
     <main>
         <?php if ($loginMessage): ?>
-        <div>
-            <p>
-                <?= $loginMessage ?>
-            </p>
+        <div class="alert alert-success alert-dismissible fade show mb-0" role="alert">
+            <?= $loginMessage ?>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
         <?php endif ?>
         <?php include("navigation.php") ?>
-        <h1>Bike Posts</h1>
-        <div id="all-posts">
+        <div class="container">
+            <h2>Bike Posts</h2>
             <?php if (isset($_SESSION['user_id'])): ?>
-            <div>
-                <form>
-                    <legend>Sort By:</legend>
-                    <input type="radio" name="sort" value="date_created"
-                        <?= $sortOption === 'date_created' ? 'checked' : '' ?> />
-                    <label for="date_created">Post Date</label>
-                    <input type="radio" name="sort" value="make" <?= $sortOption === 'make' ? 'checked' : '' ?> />
-                    <label for="make">Manufacture</label>
-                    <input type="radio" name="sort" value="year" <?= $sortOption === 'year' ? 'checked' : '' ?> />
-                    <label for="year">Model Year</label>
+            <div class="d-flex justify-content-center">
+                <p class="sort mr-2">Sort By:</p>
+                <form class="d-inline-flex">
+                    <div class="mr-3">
+                        <input type="radio" name="sort" value="date_created"
+                            <?= $sortOption === 'date_created' ? 'checked' : '' ?> />
+                        <label for="date_created">Post Date</label>
+                    </div>
+                    <div class="mr-3">
+                        <input type="radio" name="sort" value="make" <?= $sortOption === 'make' ? 'checked' : '' ?> />
+                        <label for="make">Manufacture</label>
+                    </div>
+                    <div class="mr-3">
+                        <input type="radio" name="sort" value="year" <?= $sortOption === 'year' ? 'checked' : '' ?> />
+                        <label for="year">Model Year</label>
+                    </div>
                 </form>
             </div>
+            <div class="dropdown-divider"></div>
             <?php endif ?>
             <!-- loop through database and print posts  -->
             <ul>
-                <?php foreach ($posts as $post): ?>
-                <li>
-                    <?php if ($post['image_url']): ?>
-                    <img src=<?= $post['image_url'] ?> alt="<?= $post['make'] ?>" width="300px">
-                    <?php endif ?>
-                    <div>Make:
-                        <?= $post['make'] ?>
-                    </div>
-                    <div>Model:
-                        <?= $post['model'] ?>
-                    </div>
-                    <div>Year:
-                        <?= $post['year'] ?>
-                    </div>
-                    <div>Engine:
-                        <?= $post['engine'] ?>
-                    </div>
-                    <div>
-                        <a href="editBikePost.php?id=<?= $post['id'] ?>">
-                            Edit This Post
-                        </a>
-                        <a href="post.php?id=<?= $post['id'] ?>">
-                            View This Post
-                        </a>
-                    </div>
-                </li>
-                <?php endforeach ?>
+                <div class="card-deck mx-auto">
+                    <?php foreach ($posts as $post): ?>
+                    <li>
+                        <div class="card m-2" style="width: 18rem;">
+                            <?php if ($post['image_url']): ?>
+                            <img class="card-img-top" src=<?= $post['image_url'] ?> alt="<?= $post['make'] ?>"
+                                width="300px">
+                            <?php endif ?>
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <?= $post['make'] ?>
+                                </h5>
+                                <p class="card-text">
+                                    <?= $post['model'] ?>,
+                                    <?= $post['year'] ?>
+                                </p>
+                                <p class="card-text">
+                                    <?= $post['engine'] ?>
+                                </p>
+                                <?php if (isset($_SESSION['user_id'])): ?>
+                                <a class="btn btn-primary" href="editBikePost.php?id=<?= $post['id'] ?>">
+                                    Edit This Post
+                                </a>
+                                <?php endif ?>
+                                <a class="card-link" href="post.php?id=<?= $post['id'] ?>">
+                                    View This Post
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+                    <?php endforeach ?>
+                </div>
             </ul>
         </div>
     </main>

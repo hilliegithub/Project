@@ -5,3 +5,11 @@
 .passwordlist.show {
     display: block;
 }
+.sort {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+ul li {
+    list-style: none;
+}
