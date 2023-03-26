@@ -82,7 +82,7 @@ function formHasErrors(){
 
     {
       let passLength = document.getElementById("password").value.length;
-      if(passLength < 8 || passLength > 32){
+      if(passLength < 8 || passLength > 20){
         document.getElementById("password_error").style.display = "block";
         errorFlag = true;
       }

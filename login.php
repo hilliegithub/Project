@@ -69,32 +69,52 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,  shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
     <title>Login</title>
 </head>
 
 <body>
-    <main>
+    <main class="container mt-2">
+        <h2>Log into account</h2>
         <?php if ($inputError): ?>
-        <?= $errorMessage ?>
+        <div class="username-taken alert alert-danger col-md-6" role="alert">
+            <?= $errorMessage ?>
+        </div>
         <?php endif ?>
         <form action="login.php" method="post">
-            <ul>
-                <li>
+            <div class="form-row">
+                <div class="form-group col-12 col-md-6">
                     <label for="username">Username</label>
-                    <input type="text" id="username" placeholder="Username" name="username" required>
-                    <!-- <p class="error" id="invalid_username">* Invalid Username.</p> -->
-                </li>
-                <li>
+                    <input type="text" id="username" class="form-control" placeholder="Username" name="username"
+                        required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-12 col-md-6">
                     <label for="password">Password</label>
-                    <input type="password" id="password" placeholder="Password" name="password" required>
-                </li>
-                <li>
-                    <button id="submit" name="submit" type="submit">Login</button>
-                </li>
-            </ul>
+                    <input type="password" id="password" class="form-control" placeholder="Password" name="password"
+                        required>
+                </div>
+            </div>
+            <button id="submit" class="btn btn-primary" name="submit" type="submit">Login</button>
         </form>
+        <p class="mt-2">
+            <a class="mt-2" href="index.php">Go Back To The Home Page</a>
+        </p>
     </main>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    </script>
 </body>
 
 </html>

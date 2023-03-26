@@ -92,9 +92,12 @@ try {
                         <label for="password">Password</label>
                         <input type="password" id="password" class="form-control" placeholder="Password" name="password"
                             required>
+                        <small id="passwordHelpBlock" class="form-text text-muted">
+                            Your password must be 8-20 characters long.
+                        </small>
                         <div class="alert alert-danger error" id="password_error" role="alert">Password must
                             be 8
-                            - 32 characters</div>
+                            - 20 characters</div>
                     </div>
                 </div>
                 <div class="form-row">

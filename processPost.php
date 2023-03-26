@@ -15,7 +15,7 @@ $errorMessage = '';
 
 try {
 if ($_POST) {
-        // print_r($_POST);
+        print_r($_POST);
     // Check that post is not empty and sanitize
         
     if (
