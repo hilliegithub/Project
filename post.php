@@ -82,7 +82,7 @@ try {
             <?php if ($post['image_url']): ?>
             <img class="rounded img-thumbnail" src=<?= $post['image_url'] ?> alt="<?= $post['make'] ?>" width="300px">
             <?php endif ?>
-            <div class="input-group mb-3">
+            <div class="input-group mb-3 col-12 col-md-6">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1">Make:</span>
                 </div>
@@ -90,7 +90,7 @@ try {
                                                                                                                                                                                                                                                                                                                                 aria-describedby="basic-addon1"> -->
                 <input class="form-control" type="text" placeholder="<?= $post['make'] ?>" readonly>
             </div>
-            <div class="input-group mb-3">
+            <div class="input-group mb-3 col-12 col-md-6">
                 <div class="input-group-prepend">
                     <span class="input-group-text">Model:</span>
                 </div>
@@ -98,7 +98,7 @@ try {
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 aria-describedby="basic-addon1"> -->
                 <input class="form-control" type="text" placeholder="<?= $post['model'] ?>" readonly>
             </div>
-            <div class="input-group mb-3">
+            <div class="input-group mb-3 col-12 col-md-6">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1">Year:</span>
                 </div>
@@ -106,7 +106,7 @@ try {
                                                                                                                                                                                                                                                 aria-describedby="basic-addon1"> -->
                 <input class="form-control" type="text" placeholder="<?= $post['year'] ?>" readonly>
             </div>
-            <div class="input-group mb-3">
+            <div class="input-group mb-3 col-12 col-md-6">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1">Engine:</span>
                 </div>
@@ -119,98 +119,110 @@ try {
                     Edit This Post
                 </a>
             </div>
-        </div>
-        <div id="comment-section" class="container">
-            <div class="create-comment">
-                <form action="createComment.php" method="post">
-                    <textarea id="comment" name="comment" rows="4" cols="35" placeholder="What are your thoughts?"
-                        required></textarea>
-                    <?php if (!isset($_SESSION['user_id'])): ?>
+            <div id="comment-section">
+                <div class="create-comment">
+                    <form action="createComment.php" method="post">
+                        <textarea id="comment" name="comment" rows="4" cols="35" placeholder="What are your thoughts?"
+                            required></textarea>
+                        <?php if (!isset($_SESSION['user_id'])): ?>
 
-                    <div class="form-row mt-2">
-                        <div class="form-group col-12 col-md-6">
-                            <input type="text" name="commenter" id="commenter" class="form-control"
-                                placeholder="Tell us your name" required>
+                        <div class="form-row mt-2">
+                            <div class="form-group col-12 col-md-6">
+                                <input type="text" name="commenter" id="commenter" class="form-control"
+                                    placeholder="Tell us your name" required>
+                            </div>
                         </div>
-                    </div>
-                    <input type="text" name="userid" hidden value="none">
+                        <input type="text" name="userid" hidden value="none">
 
+                        <?php else: ?>
+
+                        <!-- Username of the commenter also being passed along -->
+                        <input type="text" name="commenter" id="commenter" hidden value="<?= $_SESSION['user'] ?>">
+                        <input type="text" name="userid" hidden value="<?= $_SESSION['user_id'] ?>">
+
+                        <?php endif ?>
+
+                        <input type="text" name="postid" hidden value="<?= $post['id'] ?>">
+                        <div class="form-row mt-2">
+                            <button class="btn btn-primary mt-2" id="submit" name="submit" type="submit">+ Add a
+                                Comment</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="mt-2">
+                    <?php foreach ($comments as $comment): ?>
+                    <?php if (($_SESSION['isAdmin'] === 1) && ($comment['hidden'] === 1)): ?>
+                    <!-- if you are an admin and the comment is deemed hidden still display -->
+                    <div class="mt-2 border border-bottom p-1" style="max-width: 400px;">
+                        <p>
+                            <em>
+                                <?= $comment['content'] ?>
+                            </em>
+                        </p>
+                        <small>
+                            posted by:
+                            <mark>
+                                <?= $comment['commenter'] ?>
+                            </mark>
+                        </small>
+                        <?php if (isset($_SESSION['user_id']) && ($_SESSION['isAdmin'] === 1)): ?>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <input type="checkbox" class="form-control" id="makehidden" name="makehidden"
+                                        data-commentid="<?= $comment['commentID'] ?>"
+                                        <?= $comment['hidden'] === 1 ? 'checked' : '' ?>>
+                                </div>
+                            </div>
+
+                            <label for="makehidden" class="form-control">Hide Visibility?</label>
+                        </div>
+                        <?php endif ?>
+                        <button class="btn btn-outline-danger btn-sm mt-2" data-btn-id="<?= $comment['commentID'] ?>"
+                            name="delete" type="submit" onclick="return confirm('Are you sure?')">Delete
+                            Comment</button>
+                    </div>
                     <?php else: ?>
-
-                    <!-- Username of the commenter also being passed along -->
-                    <input type="text" name="commenter" id="commenter" hidden value="<?= $_SESSION['user'] ?>">
-                    <input type="text" name="userid" hidden value="<?= $_SESSION['user_id'] ?>">
-
-                    <?php endif ?>
-
-                    <input type="text" name="postid" hidden value="<?= $post['id'] ?>">
-                    <button class="btn btn-primary mt-2" id="submit" name="submit" type="submit">+ Add a
-                        Comment</button>
-                </form>
-            </div>
-            <div class="mt-2">
-                <?php foreach ($comments as $comment): ?>
-                <?php if (($_SESSION['isAdmin'] === 1) && ($comment['hidden'] === 1)): ?>
-                <!-- if you are an admin and the comment is deemed hidden still display -->
-                <div class="mt-1 border border-bottom p-1">
-                    <p>
-                        <em><?= $comment['content'] ?>
-                        </em>
-                    </p>
-                    <small>
-                        posted by:
-                        <mark><?= $comment['commenter'] ?>
-                        </mark>
-                    </small>
-                    <?php if (isset($_SESSION['user_id']) && ($_SESSION['isAdmin'] === 1)): ?>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">
-                                <input type="checkbox" class="form-control" id="makehidden" name="makehidden"
-                                    data-commentid="<?= $comment['commentID'] ?>"
-                                    <?= $comment['hidden'] === 1 ? 'checked' : '' ?>>
+                    <?php if (($_SESSION['isAdmin'] !== 1) && ($comment['hidden'] === 1)): ?>
+                    <!-- if you are not an admin and the comment is deemed hidden do not display -->
+                    <?php else: ?>
+                    <!-- otherwise it should be good to display -->
+                    <div class="mt-2 border border-bottom p-1" style="max-width: 400px;">
+                        <p>
+                            <em>
+                                <?= $comment['content'] ?>
+                            </em>
+                        </p>
+                        <small>
+                            posted by:
+                            <mark>
+                                <?= $comment['commenter'] ?>
+                            </mark>
+                        </small>
+                        <?php if (isset($_SESSION['user_id']) && ($_SESSION['isAdmin'] === 1)): ?>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <input type="checkbox" class="form-control" id="makehidden" name="makehidden"
+                                        data-commentid="<?= $comment['commentID'] ?>"
+                                        <?= $comment['hidden'] === 1 ? 'checked' : '' ?>>
+                                </div>
                             </div>
+
+                            <label for="makehidden" class="form-control">Hide Visibility?</label>
                         </div>
-
-                        <label for="makehidden" class="form-control">Hide Visibility?</label>
-                    </div>
-
-                    <?php endif ?>
-                </div>
-                <?php else: ?>
-                <?php if (($_SESSION['isAdmin'] !== 1) && ($comment['hidden'] === 1)): ?>
-                <!-- if you are not an admin and the comment is deemed hidden do not display -->
-                <?php else: ?>
-                <!-- otherwise it should be good to display -->
-                <div class="mt-1 border border-bottom p-1">
-                    <p>
-                        <em><?= $comment['content'] ?>
-                        </em>
-                    </p>
-                    <small>
-                        posted by:
-                        <mark><?= $comment['commenter'] ?>
-                        </mark>
-                    </small>
-                    <?php if (isset($_SESSION['user_id']) && ($_SESSION['isAdmin'] === 1)): ?>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">
-                                <input type="checkbox" class="form-control" id="makehidden" name="makehidden"
-                                    data-commentid="<?= $comment['commentID'] ?>"
-                                    <?= $comment['hidden'] === 1 ? 'checked' : '' ?>>
-                            </div>
-                        </div>
-
-                        <label for="makehidden" class="form-control">Hide Visibility?</label>
+                        <?php endif ?>
+                        <?php if (isset($_SESSION['user_id']) && ($_SESSION['isAdmin'] === 1)): ?>
+                        <button class="btn btn-outline-danger btn-sm mt-2" data-btn-id="<?= $comment['commentID'] ?>"
+                            name="delete" type="submit" onclick="return confirm('Are you sure?')">Delete
+                            Comment</button>
+                        <?php endif ?>
                     </div>
                     <?php endif ?>
+                    <?php endif ?>
 
+                    <?php endforeach ?>
                 </div>
-                <?php endif ?>
-                <?php endif ?>
-
-                <?php endforeach ?>
             </div>
         </div>
     </main>
