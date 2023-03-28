@@ -14,6 +14,7 @@
             <?php if (!isset($_SESSION['user_id'])): ?>
             <a class="nav-item nav-link active" href="register.php">Register <span class="sr-only">(current)</span></a>
             <?php endif ?>
+            <a class="nav-item nav-link" href="allPosts.php">All Posts</a>
             <a class="nav-item nav-link" href="createPost.php">Create Post</a>
             <?php if (!isset($_SESSION['user_id'])): ?>
             <a class="nav-item nav-link" href="login.php">Login</a>

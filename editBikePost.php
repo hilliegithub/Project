@@ -189,11 +189,14 @@ try {
                     <input id="submit" type="submit" name="command" value="delete"
                         onclick="return confirm('Are you sure you wish to delete this post?')" /> -->
 
+                    <?php if (($_SESSION['isAdmin'] === 1) || ($post['userID'] === $_SESSION['user_id'])): ?>
                     <button class="btn btn-secondary" id="submit" name="command" type="submit"
                         value="update">Update</button>
                     <button class="btn btn-danger" id="submit" name="command" type="submit" value="delete"
                         onclick="return confirm('Are you sure you wish to delete this post?')">Delete</button>
-
+                    <?php else: ?>
+                    <small><em>Only the Administrator or Post creator may edit this post.</em></small>
+                    <?php endif ?>
                 </fieldset>
             </form>
             <?php endif ?>

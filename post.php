@@ -114,11 +114,13 @@ try {
                                                                                                                             aria-describedby="basic-addon1"> -->
                 <input class="form-control" type="text" placeholder="<?= $post['engine'] ?>" readonly>
             </div>
+            <?php if (isset($_SESSION['user_id'])): ?>
             <div class="m-2">
                 <a href="editBikePost.php?id=<?= $post['id'] ?>">
                     Edit This Post
                 </a>
             </div>
+            <?php endif ?>
             <div id="comment-section">
                 <div class="create-comment">
                     <form action="createComment.php" method="post">
