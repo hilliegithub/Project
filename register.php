@@ -1,5 +1,11 @@
 <?php
-require("connect.php");
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require_once './PHPMailer-master/src/Exception.php';
+require_once './PHPMailer-master/src/PHPMailer.php';
+require_once './PHPMailer-master/src/SMTP.php';
+require_once("connect.php");
 
 try {
     $processingError = false;
@@ -38,6 +44,27 @@ try {
                 throw new Exception('Error while processing registration. Please try again later.');
             }
 
+            $phpmailer = new PHPMailer();
+            $phpmailer->isSMTP();
+            $phpmailer->Host = 'sandbox.smtp.mailtrap.io';
+            $phpmailer->SMTPAuth = true;
+            $phpmailer->Port = 2525;
+            $phpmailer->Username = '15e4cd121528e0';
+            $phpmailer->Password = 'c354f71b5aeed4';
+
+            $phpmailer->setFrom('hmcdonald47@rrc.ca', 'Hylton BikeClub');
+            $phpmailer->addReplyTo($email, $username);
+            $phpmailer->addAddress($email, $username);
+
+            $phpmailer->Subject = 'Registration Confirmation';
+            $phpmailer->Body = 'Thank you for registering.';
+
+            if (!$phpmailer->send()) {
+                throw new Exception('Mailer Error: ' . $phpmailer->ErrorInfo);
+            }
+            // else {
+            //     echo 'Message sent!';
+            // }
         }
     }
 } catch (Exception $e) {
@@ -61,6 +88,11 @@ try {
 
 <body>
     <main>
+        <?php if ($processingError): ?>
+        <div class="alert alert-danger" role="alert">
+            <?= $errorMessage ?>
+        </div>
+        <?php endif ?>
         <?php include("navigation.php") ?>
         <div class="container">
             <h2>User Sign Up</h2>

@@ -111,6 +111,11 @@ function getPostList($option, $obj)
                                 <p class="card-text">
                                     <?= $post['engine'] ?>
                                 </p>
+                                <p class="card-text">
+                                    <small><em>Posted: <?= date('F j, Y', strtotime($post['date_created'])) ?>
+                                        </em>
+                                    </small>
+                                </p>
                                 <?php if (isset($_SESSION['user_id'])): ?>
                                 <a class="btn btn-primary" href="editBikePost.php?id=<?= $post['id'] ?>">
                                     Edit This Post
