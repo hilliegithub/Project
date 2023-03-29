@@ -6,7 +6,6 @@ require_once("connect.php");
 $processingError = false;
 $errorMessage = '';
 $loginMessage = '';
-
 //Check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
     $_SESSION['redirect_url'] = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL);
@@ -15,7 +14,7 @@ if (!isset($_SESSION['user_id'])) {
 } else {
     if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] === 1) {
         // print_r($_SESSION);
-
+        
         if (isset($_COOKIE['loginMessage']))
             $loginMessage = filter_var($_COOKIE['loginMessage'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     } else {
@@ -27,6 +26,7 @@ if (!isset($_SESSION['user_id'])) {
 try {
     $lquery = "SELECT userID, username, email, isAdmin FROM user";
     $stmt = $db->prepare($lquery);
+    // throw new Exception('Testing');
     $result = $stmt->execute();
     if (!$result) {
         throw new Exception("Error checking username and password");
@@ -34,6 +34,7 @@ try {
     $users = $stmt->fetchAll();
     // print_r($users);
 } catch (Exception $e) {
+    $processingError = true;
     $errorMessage = $e->getMessage();
 }
 
@@ -55,47 +56,52 @@ try {
 <body>
     <main>
         <?php if ($loginMessage): ?>
-        <div>
-            <p>
-                <?= $loginMessage ?>
-            </p>
+        <div class="alert alert-success alert-dismissible fade show mb-0" role="alert">
+            <?= $loginMessage ?>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
         <?php endif ?>
         <?php include("navigation.php") ?>
         <?php if ($processingError): ?>
-        <p>
+        <div class="username-taken alert alert-danger" role="alert">
             <?= $errorMessage ?>
-        </p>
-        <p><a href="index.php">Back To Home Page</a></p>
+            <p><a class="alert-link" href="index.php">Back To Home Page</a></p>
+        </div>
         <?php else: ?>
-        <h1>Manage All Users</h1>
-        <?php foreach ($users as $user): ?>
-        <div class="each-user" style="border: 1px solid black; margin-bottom: 10px;">
-            <p>
-                Username:
-                <?php echo $user['username']; ?>
-            </p>
-            <p>
-                Email Address:
-                <?php echo $user['email']; ?>
-            </p>
+        <div class="container mt-2">
+            <?php if (isset($users)): ?>
+            <h1>Manage All Users</h1>
+            <?php foreach ($users as $user): ?>
+            <div class="p-2 m-4" style="border-bottom: 1px solid black;">
 
-            <p> Adminstrator?
-                <?php if ($user['isAdmin'] === 1): ?>
-                True
-                <?php else: ?>
-                False
-                <?php endif ?>
-            </p>
-            <p>
-                <button class="edit-button">
-                    <a href="manageUserProcess.php?id=<?= $user['userID'] ?>">Edit</a>
-                </button>
-            </p>
-
-        </div id="<?= $user['userID'] ?>">
-        <?php endforeach ?>
-
+                <div class="input-group p-0 mt-3 mb-3 col-12 col-md-8">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">Username:</span>
+                    </div>
+                    <input class="form-control" type="text" placeholder="<?= $user['username'] ?>" readonly>
+                </div>
+                <div class="input-group p-0 mt-3 mb-3 col-12 col-md-8">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">Email Address:</span>
+                    </div>
+                    <input class="form-control" type="text" placeholder="<?= $user['email'] ?>" readonly>
+                </div>
+                <div class="input-group p-0 mt-3 mb-3 col-12 col-md-8">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">Adminstrator?:</span>
+                    </div>
+                    <input class="form-control" type="text"
+                        placeholder="<?php if ($user['isAdmin'] === 1): ?>True<?php else: ?>False<?php endif ?>"
+                        readonly>
+                </div>
+                <a class="btn btn-secondary role=" button"
+                    href="manageUserProcess.php?id=<?= $user['userID'] ?>">Edit</a>
+            </div id="<?= $user['userID'] ?>">
+            <?php endforeach ?>
+            <?php endif ?>
+        </div>
         <?php endif ?>
     </main>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

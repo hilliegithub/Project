@@ -2,46 +2,34 @@
 session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-require("connect.php");
-$inputError = false;
+require_once("connect.php");
+$processingError = false;
 $errorMessage = '';
-$loginMessage = '';
-$sorting = ['date_created', 'make', 'year'];
-$sortOption = '';
-
-if (isset($_SESSION['user_id']) && isset($_COOKIE['loginMessage'])) {
-    $loginMessage = filter_var($_COOKIE['loginMessage'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-}
-
 
 try {
-    if (!isset($_COOKIE['sort']) || !isset($_SESSION['user_id'])) {
-        setcookie('sort', $sorting[0], time() + 3600);
-        $sortOption = $sorting[0];
+    if ($_GET) {
+
+        $searchTerm = filter_input(INPUT_GET, 'q', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $query = "SELECT * FROM BikePost WHERE LOWER(make) LIKE '%" . strtolower($searchTerm) . "%'";
+        $stmt = $db->prepare($query);
+        // $stmt->bindValue('term', strtolower($searchTerm));
+        $result = $stmt->execute();
+        if (!$result)
+            throw new Exception('Could not process your request');
+        $posts = $stmt->fetchAll();
+        // echo $stmt->rowCount();
     } else {
-        $sortOption = filter_var($_COOKIE['sort'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        if (!in_array($sortOption, $sorting)) {
-            $sortOption = $sorting[0];
-            setcookie('sort', $sorting[0], time() + 3600);
-        }
+        header('Location: index.php');
+        exit;
     }
-    $posts = getPostList($sortOption, $db);
 } catch (Exception $e) {
-    // Handle exception
-    $inputError = true;
+    $processingError = true;
     $errorMessage = $e->getMessage();
 }
 
-function getPostList($option, $obj)
-{
-    $query = "SELECT * FROM Bikepost ORDER BY " . $option . " DESC";
-    $statement = $obj->prepare($query);
-    $result = $statement->execute();
-    if (!$result)
-        throw new Exception("Error while retrieving data. Please try again later.");
-    return $statement->fetchAll();
 
-}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -53,48 +41,35 @@ function getPostList($option, $obj)
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <title>All Motorcycle Posts</title>
+    <link rel="stylesheet" href="styles/styles.css?1">
+    <title>Search Results for "
+        <?= $searchTerm ?>"
+    </title>
 </head>
 
 <body>
     <main>
-        <?php if ($loginMessage): ?>
-        <div class="alert alert-success alert-dismissible fade show mb-0" role="alert">
-            <?= $loginMessage ?>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <?php endif ?>
         <?php include("navigation.php") ?>
         <div class="container mt-2">
-            <h2>Bike Posts</h2>
-            <?php if (isset($_SESSION['user_id'])): ?>
-            <div class="d-flex justify-content-center">
-                <p class="sort mr-2">Sort By:</p>
-                <form class="d-inline-flex">
-                    <div class="mr-3">
-                        <input type="radio" name="sort" value="date_created"
-                            <?= $sortOption === 'date_created' ? 'checked' : '' ?> />
-                        <label for="date_created">Post Date</label>
-                    </div>
-                    <div class="mr-3">
-                        <input type="radio" name="sort" value="make" <?= $sortOption === 'make' ? 'checked' : '' ?> />
-                        <label for="make">Manufacture</label>
-                    </div>
-                    <div class="mr-3">
-                        <input type="radio" name="sort" value="year" <?= $sortOption === 'year' ? 'checked' : '' ?> />
-                        <label for="year">Model Year</label>
-                    </div>
-                </form>
+            <h2 class="text-white">Search Results</h2>
+            <?php if ($processingError): ?>
+            <div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
+                <strong>Fatal Error!</strong>
+                <?= $errorMessage ?>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="dropdown-divider"></div>
+
             <?php endif ?>
+            <?php if ($stmt->rowCount() === 0): ?>
+            <h3 class="text-white">Could Not Find Any Search Results...</h3>
+            <?php else: ?>
             <!-- loop through database and print posts  -->
             <ul>
                 <div class="card-deck mx-auto">
                     <?php foreach ($posts as $post): ?>
-                    <li style=" list-style: none;">
+                    <li>
                         <div class="card m-2" style="width: 18rem;">
                             <?php if ($post['image_url']): ?>
                             <img class="card-img-top" src=<?= $post['image_url'] ?> alt="<?= $post['make'] ?>"
@@ -125,9 +100,9 @@ function getPostList($option, $obj)
                     <?php endforeach ?>
                 </div>
             </ul>
+            <?php endif ?>
         </div>
     </main>
-    <script type="text/javascript" src="scripts/allPosts.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
     </script>

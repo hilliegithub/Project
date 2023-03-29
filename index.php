@@ -14,34 +14,22 @@ if (isset($_SESSION['user_id']) && isset($_COOKIE['loginMessage'])) {
 }
 
 
-// try {
-//     if (!isset($_COOKIE['sort']) || !isset($_SESSION['user_id'])) {
-//         setcookie('sort', $sorting[0], time() + 3600);
-//         $sortOption = $sorting[0];
-//     } else {
-//         $sortOption = filter_var($_COOKIE['sort'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-//         if (!in_array($sortOption, $sorting)) {
-//             $sortOption = $sorting[0];
-//             setcookie('sort', $sorting[0], time() + 3600);
-//         }
-//     }
-//     $posts = getPostList($sortOption, $db);
-// } catch (Exception $e) {
-//     // Handle exception
-//     $inputError = true;
-//     $errorMessage = $e->getMessage();
-// }
+try {
+    // throw new Exception('Holy guacamole!');
+    $query = "SELECT * FROM Bikepost ORDER BY date_created DESC LIMIT 3";
+    $statement = $db->prepare($query);
+    $result = $statement->execute();
+    if (!$result)
+        throw new Exception("Error while retrieving data. Please try again later.");
 
-// function getPostList($option, $obj)
-// {
-//     $query = "SELECT * FROM Bikepost ORDER BY " . $option . " DESC";
-//     $statement = $obj->prepare($query);
-//     $result = $statement->execute();
-//     if (!$result)
-//         throw new Exception("Error while retrieving data. Please try again later.");
-//     return $statement->fetchAll();
+    $posts = $statement->fetchAll();
+} catch (Exception $e) {
+    // Handle exception
+    $inputError = true;
+    $errorMessage = $e->getMessage();
+}
 
-// }
+
 ?>
 
 <!DOCTYPE html>
@@ -67,6 +55,15 @@ if (isset($_SESSION['user_id']) && isset($_COOKIE['loginMessage'])) {
             </button>
         </div>
         <?php endif ?>
+        <?php if ($inputError): ?>
+        <div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
+            <strong>Fatal Error!</strong>
+            <?= $errorMessage ?>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <?php endif ?>
         <?php include("navigation.php") ?>
         <div class="container mt-3">
             <h4 class="text-center text-white">Welcome to Hylton's Bike Club</h4>
@@ -78,7 +75,10 @@ if (isset($_SESSION['user_id']) && isset($_COOKIE['loginMessage'])) {
                 REVIEW
                 WINNIPEG'S crème de la crème
                 Bikes.</h1>
-            <button class="mx-auto btn btn-secondary col-md-4 btn-lg btn-block">Join</button>
+            <?php if (!isset($_SESSION['user_id'])): ?>
+            <p><a class="mx-auto btn text-white btn-secondary col-md-4 btn-lg btn-block" href="register.php">Join</a>
+            </p>
+            <?php endif ?>
             <p class="text-white mt-5" style="text-align: right;">Hylton’s Bike Club is Winnipeg based not-for-profit
                 organization
                 that posts official
@@ -88,6 +88,35 @@ if (isset($_SESSION['user_id']) && isset($_COOKIE['loginMessage'])) {
                 community is
                 dispersed to various social media platforms. Gathering consensus on motorcycle in the city is hard to
                 do. </p>
+            <div class="d-flex flex-column flex-lg-row">
+                <?php foreach ($posts as $post): ?>
+                <div class="card m-2 mx-auto" style="width: 18rem;">
+                    <?php if ($post['image_url']): ?>
+                    <img class="card-img-top" src=<?= $post['image_url'] ?> alt="<?= $post['make'] ?>" width="300px">
+                    <?php endif ?>
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <?= $post['make'] ?>
+                        </h5>
+                        <p class="card-text">
+                            <?= $post['model'] ?>,
+                            <?= $post['year'] ?>
+                        </p>
+                        <p class="card-text">
+                            <?= $post['engine'] ?>
+                        </p>
+                        <?php if (isset($_SESSION['user_id'])): ?>
+                        <p><a class="btn btn-primary" href="editBikePost.php?id=<?= $post['id'] ?>">
+                                Edit This Post
+                            </a></p>
+                        <?php endif ?>
+                        <a class="card-link" href="post.php?id=<?= $post['id'] ?>">
+                            View This Post
+                        </a>
+                    </div>
+                </div>
+                <?php endforeach ?>
+            </div>
         </div>
     </main>
     <!-- <script type="text/javascript" src="scripts/index.js"></script> -->

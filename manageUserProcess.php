@@ -130,10 +130,13 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="styles/styles.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles/styles.css?1">
     <title>Manage
         <?= $user['username'] ?>
+        <?php isset($user['username']) ? $user['username'] : 'User' ?>
     </title>
 </head>
 
@@ -141,69 +144,107 @@ try {
     <main>
         <?php include("navigation.php") ?>
         <?php if ($processingError): ?>
-        <p>
+        <div class="username-taken alert alert-danger" role="alert">
             <?= $errorMessage ?>
-        </p>
-        <p><a href="index.php">Back To Home Page</a></p>
+            <p><a class="alert-link" href="index.php">Back To Home Page</a></p>
+        </div>
         <?php else: ?>
-        <h1>Edit
-            <?= $user['username'] ?>'s Record
-        </h1>
-        <form action="manageUserProcess.php" method="post">
-            <ul>
-                <li>
-                    <input name="userid" value="<?= $user['userID'] ?>" hidden>
-                    <label for="username">Username</label>
-                    <input type="text" id="username" placeholder="Username" name="username"
-                        value="<?= $user['username'] ?>" required>
-                </li>
-                <li>
-                    <label for="email">Email</label>
-                    <input type="email" id="email" placeholder="user@email" name="email" value="<?= $user['email'] ?>"
-                        required>
-                </li>
-                </li>
-                <li>
-                    <label for="isadmin">Assign adminstrator role?</label>
-                    <select id="isadmin" name="isadmin">
-                        <option>
-                            <?php if ($user['isAdmin'] === 1): ?>
-                            True
-                            <?php else: ?>
-                            False
-                            <?php endif ?>
-                        </option>
-                        <option>
-                            <?php if ($user['isAdmin'] === 1): ?>
-                            False
-                            <?php else: ?>
-                            True
-                            <?php endif ?>
-                        </option>
-                    </select>
-                </li>
-                <li>
-                    <label for="changePassword">Do you wish to change the password?</label>
-                    <input type="checkbox" id="changePassword" name="changePassword">
-                <li>
-                <li class="passwordlist">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" placeholder="Password" name="password">
-                <li>
-                <li class="passwordlist">
+        <div class="container mt-2">
+            <h2>Edit
+                <?= $user['username'] ?>'s Record
+            </h2>
+            <form action="manageUserProcess.php" method="post">
+                <!-- <ul>
+                    <li style=" list-style: none;"> -->
+                <div class="form-row">
+                    <div class="form-group col-12 col-md-6">
+                        <label for="username">Username</label>
+                        <input name="userid" value="<?= $user['userID'] ?>" hidden>
+                        <input type="text" id="username" class="form-control" placeholder="Username" name="username"
+                            value="<?= $user['username'] ?>" required>
+                    </div>
+                </div>
+
+                <!-- </li>
+                                                    <listyle=" list-style: none;"> -->
+                <div class="form-row">
+                    <div class="form-group col-12 col-md-6">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" class="form-control" placeholder="user@email" name="email"
+                            value="<?= $user['email'] ?>" required>
+                    </div>
+                </div>
+
+                <div class="form-row col-md-6 p-0 mb-3">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="isadmin">Assign adminstrator role?</label>
+                        </div>
+                        <select class="custom-select" id="isadmin" name="isadmin">
+                            <?php
+                                        $options = [
+                                            ['value' => 'True', 'label' => 'True'],
+                                            ['value' => 'False', 'label' => 'False']
+                                        ];
+
+                                        foreach ($options as $option) {
+                                            $selected = ($option['value'] === ($user['isAdmin'] === 1 ? 'True' : 'False')) ? 'selected' : '';
+                                            echo "<option value=\"{$option['value']}\" {$selected}>{$option['label']}</option>";
+                                        }
+                                        ?>
+                        </select>
+                    </div>
+                </div>
+                <!-- </li>
+                        <li> -->
+                <div class="form-row">
+                    <div class="form-group col-12 col-md-6">
+                        <label for="changePassword">Do you wish to change the password?</label>
+                        <input type="checkbox" class="form-control" id="changePassword" name="changePassword">
+                    </div>
+                </div>
+
+                <!-- <li>
+                        <li class="passwordlist"> -->
+                <div class="form-row passwordlist">
+                    <div class="form-group col-12 col-md-6">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" placeholder="Password"
+                            name="password">
+                    </div>
+                </div>
+                <!-- <li>
+                        <li class="passwordlist"> -->
+                <div class="form-row passwordlist">
+                    <div class="form-group col-12 col-md-6">
+                    </div>
                     <label for="confirmpassword">Confirm Password</label>
-                    <input type="password" id="confirmpassword" placeholder="Password" name="confirmpassword">
-                <li>
-                    <button id="submit" name="submit" type="submit" value="update"
+                    <input type="password" class="form-control" id="confirmpassword" placeholder="Password"
+                        name="confirmpassword">
+                </div>
+                <!-- <li> -->
+                <div class="form-row mt-3">
+                    <button class="btn btn-secondary mr-2" id="submit" name="submit" type="submit" value="update"
                         onclick="confirm('Are you sure you wish make these changes?')">Update</button>
-                    <button id="submit" name="submit" type="submit" value="remove"
+                    <button class="btn btn-danger" id="submit" name="submit" type="submit" value="remove"
                         onclick="confirm('Are you sure you wish to delete <?= $user['username'] ?>?')">Delete</button>
-                </li>
-            </ul>
-        </form>
+                </div>
+                <!-- </li>
+                </ul> -->
+            </form>
+        </div>
         <?php endif ?>
     </main>
     <script src=" scripts/manageUsers.js?1"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    </script>
 </body>
 
 </html>

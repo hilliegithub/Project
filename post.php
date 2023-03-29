@@ -82,7 +82,7 @@ try {
             <?php if ($post['image_url']): ?>
             <img class="rounded img-thumbnail" src=<?= $post['image_url'] ?> alt="<?= $post['make'] ?>" width="300px">
             <?php endif ?>
-            <div class="input-group mb-3 col-12 col-md-6">
+            <div class="input-group p-0 mt-3 mb-3 col-12 col-md-6">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1">Make:</span>
                 </div>
@@ -90,7 +90,7 @@ try {
                                                                                                                                                                                                                                                                                                                                 aria-describedby="basic-addon1"> -->
                 <input class="form-control" type="text" placeholder="<?= $post['make'] ?>" readonly>
             </div>
-            <div class="input-group mb-3 col-12 col-md-6">
+            <div class="input-group p-0 mb-3 col-12 col-md-6">
                 <div class="input-group-prepend">
                     <span class="input-group-text">Model:</span>
                 </div>
@@ -98,7 +98,7 @@ try {
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 aria-describedby="basic-addon1"> -->
                 <input class="form-control" type="text" placeholder="<?= $post['model'] ?>" readonly>
             </div>
-            <div class="input-group mb-3 col-12 col-md-6">
+            <div class="input-group p-0 mb-3 col-12 col-md-6">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1">Year:</span>
                 </div>
@@ -106,7 +106,7 @@ try {
                                                                                                                                                                                                                                                 aria-describedby="basic-addon1"> -->
                 <input class="form-control" type="text" placeholder="<?= $post['year'] ?>" readonly>
             </div>
-            <div class="input-group mb-3 col-12 col-md-6">
+            <div class="input-group p-0 mb-3 col-12 col-md-6">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1">Engine:</span>
                 </div>
