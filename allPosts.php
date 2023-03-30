@@ -74,16 +74,18 @@ function getPostList($option, $obj)
                 <p class="sort mr-2">Sort By:</p>
                 <form class="d-inline-flex">
                     <div class="mr-3">
-                        <input type="radio" name="sort" value="date_created"
-                            <?= $sortOption === 'date_created' ? 'checked' : '' ?> />
+                        <input type="radio" id="date_created" name="sort" value="date_created"
+                            <?= $sortOption === 'date_created' ? 'checked' : '' ?>>
                         <label for="date_created">Post Date</label>
                     </div>
                     <div class="mr-3">
-                        <input type="radio" name="sort" value="make" <?= $sortOption === 'make' ? 'checked' : '' ?> />
+                        <input type="radio" id="make" name="sort" value="make"
+                            <?= $sortOption === 'make' ? 'checked' : '' ?>>
                         <label for="make">Manufacture</label>
                     </div>
                     <div class="mr-3">
-                        <input type="radio" name="sort" value="year" <?= $sortOption === 'year' ? 'checked' : '' ?> />
+                        <input type="radio" id="year" name="sort" value="year"
+                            <?= $sortOption === 'year' ? 'checked' : '' ?>>
                         <label for="year">Model Year</label>
                     </div>
                 </form>
@@ -91,48 +93,43 @@ function getPostList($option, $obj)
             <div class="dropdown-divider"></div>
             <?php endif ?>
             <!-- loop through database and print posts  -->
-            <ul>
-                <div class="card-deck mx-auto">
-                    <?php foreach ($posts as $post): ?>
-                    <li style=" list-style: none;">
-                        <div class="card m-2" style="width: 18rem;">
-                            <?php if ($post['image_url']): ?>
-                            <img class="card-img-top" src=<?= $post['image_url'] ?> alt="<?= $post['make'] ?>"
-                                width="300px">
-                            <?php endif ?>
-                            <div class="card-body">
-                                <h5 class="card-title">
-                                    <?= $post['make'] ?>
-                                </h5>
-                                <p class="card-text">
-                                    <?= $post['model'] ?>,
-                                    <?= $post['year'] ?>
-                                </p>
-                                <p class="card-text">
-                                    <?= $post['engine'] ?>
-                                </p>
-                                <p class="card-text">
-                                    <small><em>Posted: <?= date('F j, Y', strtotime($post['date_created'])) ?>
-                                        </em>
-                                    </small>
-                                </p>
-                                <?php if (isset($_SESSION['user_id'])): ?>
-                                <a class="btn btn-primary" href="editBikePost.php?id=<?= $post['id'] ?>">
-                                    Edit This Post
-                                </a>
+            <div class="card-deck mx-auto">
+                <?php foreach ($posts as $post): ?>
+                <div class="col-md-4 mb-3">
+                    <div class="card h-100">
+                        <?php if ($post['image_url']): ?>
+                        <img class="card-img-top" src=<?= $post['image_url'] ?> alt="<?= $post['make'] ?>">
+                        <?php endif ?>
+                        <div class="card-body">
+                            <h5 class="card-title"><?= $post['make'] ?>
+                            </h5>
+                            <p class="card-text">
+                                <?= $post['model'] ?>,
+                                <?= $post['year'] ?>
+                            </p>
+                            <p class="card-text">
+                                <?= $post['engine'] ?>
+                            </p>
+                            <p class="card-text">
+                                <small><em>Posted:
+                                        <?= date('F j, Y', strtotime($post['date_created'])) ?>
+                                    </em></small>
+                            </p>
+                            <?php if (isset($_SESSION['user_id'])): ?>
+                            <p><a class="btn btn-primary" href="editBikePost.php?id=<?= $post['id'] ?>">Edit This
+                                    Post</a>
                                 <?php endif ?>
-                                <a class="card-link" href="post.php?id=<?= $post['id'] ?>">
-                                    View This Post
-                                </a>
-                            </div>
+                            </p>
+                            <a class="card-link ml-2" href="post.php?id=<?= $post['id'] ?>">View This Post</a>
                         </div>
-                    </li>
-                    <?php endforeach ?>
+                    </div>
                 </div>
-            </ul>
+                <?php endforeach ?>
+            </div>
+
         </div>
     </main>
-    <script type="text/javascript" src="scripts/allPosts.js"></script>
+    <script src="scripts/allPosts.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
     </script>

@@ -101,7 +101,7 @@ try {
 
                             <label for="make">Bike Make</label>
                             <input id="make" name="make" type="text" value="<?= $post['make'] ?>" class="form-control"
-                                required maxlength="<?= BIKEMAKE_MAX_LENGTH ?>" />
+                                required maxlength="<?= BIKEMAKE_MAX_LENGTH ?>">
                         </div>
                     </div>
 
@@ -109,7 +109,7 @@ try {
                         <div class="form-group col-12 col-md-6">
                             <label for="model">Bike Model</label>
                             <input id="model" name="model" class="form-control" value="<?= $post['model'] ?>"
-                                type="text" required maxlength="<?= BIKEMODEL_MAX_LENGTH ?>" />
+                                type="text" required maxlength="<?= BIKEMODEL_MAX_LENGTH ?>">
                         </div>
                     </div>
 
@@ -117,7 +117,7 @@ try {
                         <div class="form-group col-12 col-md-6">
                             <label for="engine">Engine</label>
                             <input id="engine" name="engine" type="text" value="<?= $post['engine'] ?>"
-                                class="form-control" required maxlength="<?= BIKE_ENGINE_MAX_LENGTH ?>" />
+                                class="form-control" required maxlength="<?= BIKE_ENGINE_MAX_LENGTH ?>">
                         </div>
                     </div>
 
@@ -125,7 +125,7 @@ try {
                         <div class="form-group col-12 col-md-6">
                             <label for="year">Year</label>
                             <input id="year" name="year" class="form-control" value="<?= $post['year'] ?>" type="number"
-                                min="1900" max="2099" required />
+                                min="1900" max="2099" required>
                         </div>
                     </div>
 
@@ -134,19 +134,18 @@ try {
                         <div class="form-group col-12 col-md-6">
                             <label for="displacement">Displacement (ccm)</label>
                             <input id="displacement" value="<?= $post['displacement_ccm'] ?>" name="displacement"
-                                class="form-control" type="text" required />
+                                class="form-control" type="text" required>
                         </div>
                     </div>
 
                     <div class="form-row">
-                        <div class="form-group col-12 col-md-6"">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <label for="
-                            file-input">Choose
-                            file:</label>
+                        <div class="form-group col-12 col-md-6">
+                            <label for="image">Choose
+                                file:</label>
                             <div class="input-group">
                                 <div class="custom-file">
                                     <input id="image" name="image" class="custom-file-input" type="file"
-                                        accept=".png, .jpg, .jpeg" />
+                                        accept=".png, .jpg, .jpeg">
                                     <label class="custom-file-label" for="image">Choose an Image</label>
                                 </div>
                             </div>
@@ -173,26 +172,15 @@ try {
                         </div>
                     </div>
                     <?php endif ?>
-                    <!-- <li>
-                        <label for="image">Bike Image</label>
-                        <input id="image" name="image" type="file" accept=".png, .jpg, .jpeg" />
-
-                        <label for="removeimage">Do you want to just delete the Image?</label>
-                        <input type="checkbox" id="removeimage" name="removeimage"
-                            onclick="confirm('Are you sure you wish to delete this image?')">
-
-                        <input id="imageOld" name="imageOld" type="text" hidden value="<?= $post['image_url'] ?>">
-                    </li> -->
 
                     <input type="hidden" name="id" value="<?= $post['id'] ?>">
-                    <!-- <input id="submit" type="submit" name="command" value="update" />
+                    <!-- <input id="submit" type="submit" name="command" value="update" >
                     <input id="submit" type="submit" name="command" value="delete"
-                        onclick="return confirm('Are you sure you wish to delete this post?')" /> -->
+                        onclick="return confirm('Are you sure you wish to delete this post?')" > -->
 
                     <?php if (($_SESSION['isAdmin'] === 1) || ($post['userID'] === $_SESSION['user_id'])): ?>
-                    <button class="btn btn-secondary" id="submit" name="command" type="submit"
-                        value="update">Update</button>
-                    <button class="btn btn-danger" id="submit" name="command" type="submit" value="delete"
+                    <button class="btn btn-secondary" name="command" type="submit" value="update">Update</button>
+                    <button class="btn btn-danger" name="command" type="submit" value="delete"
                         onclick="return confirm('Are you sure you wish to delete this post?')">Delete</button>
                     <?php else: ?>
                     <small><em>Only the Administrator or Post creator may edit this post.</em></small>
@@ -202,7 +190,7 @@ try {
             <?php endif ?>
         </div>
     </main>
-    <script type="text/javascript" src="scripts/createPost.js"></script>
+    <script src="scripts/createPost.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
     </script>

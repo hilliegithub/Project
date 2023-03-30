@@ -66,40 +66,39 @@ try {
             <h3 class="text-white">Could Not Find Any Search Results...</h3>
             <?php else: ?>
             <!-- loop through database and print posts  -->
-            <ul>
-                <div class="card-deck mx-auto">
-                    <?php foreach ($posts as $post): ?>
-                    <li>
-                        <div class="card m-2" style="width: 18rem;">
-                            <?php if ($post['image_url']): ?>
-                            <img class="card-img-top" src=<?= $post['image_url'] ?> alt="<?= $post['make'] ?>"
-                                width="300px">
-                            <?php endif ?>
-                            <div class="card-body">
-                                <h5 class="card-title">
-                                    <?= $post['make'] ?>
-                                </h5>
-                                <p class="card-text">
-                                    <?= $post['model'] ?>,
-                                    <?= $post['year'] ?>
-                                </p>
-                                <p class="card-text">
-                                    <?= $post['engine'] ?>
-                                </p>
-                                <?php if (isset($_SESSION['user_id'])): ?>
-                                <a class="btn btn-primary" href="editBikePost.php?id=<?= $post['id'] ?>">
-                                    Edit This Post
-                                </a>
+            <div class="card-deck mx-auto">
+                <?php foreach ($posts as $post): ?>
+                <div class="col-md-4 mb-3">
+                    <div class="card h-100">
+                        <?php if ($post['image_url']): ?>
+                        <img class="card-img-top" src=<?= $post['image_url'] ?> alt="<?= $post['make'] ?>">
+                        <?php endif ?>
+                        <div class="card-body">
+                            <h5 class="card-title"><?= $post['make'] ?>
+                            </h5>
+                            <p class="card-text">
+                                <?= $post['model'] ?>,
+                                <?= $post['year'] ?>
+                            </p>
+                            <p class="card-text">
+                                <?= $post['engine'] ?>
+                            </p>
+                            <p class="card-text">
+                                <small><em>Posted:
+                                        <?= date('F j, Y', strtotime($post['date_created'])) ?>
+                                    </em></small>
+                            </p>
+                            <?php if (isset($_SESSION['user_id'])): ?>
+                            <p><a class="btn btn-primary" href="editBikePost.php?id=<?= $post['id'] ?>">Edit This
+                                    Post</a>
                                 <?php endif ?>
-                                <a class="card-link" href="post.php?id=<?= $post['id'] ?>">
-                                    View This Post
-                                </a>
-                            </div>
+                            </p>
+                            <a class="card-link ml-2" href="post.php?id=<?= $post['id'] ?>">View This Post</a>
                         </div>
-                    </li>
-                    <?php endforeach ?>
+                    </div>
                 </div>
-            </ul>
+                <?php endforeach ?>
+            </div>
             <?php endif ?>
         </div>
     </main>

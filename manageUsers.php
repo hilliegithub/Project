@@ -78,27 +78,26 @@ try {
 
                 <div class="input-group p-0 mt-3 mb-3 col-12 col-md-8">
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">Username:</span>
+                        <span class="input-group-text">Username:</span>
                     </div>
                     <input class="form-control" type="text" placeholder="<?= $user['username'] ?>" readonly>
                 </div>
                 <div class="input-group p-0 mt-3 mb-3 col-12 col-md-8">
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">Email Address:</span>
+                        <span class="input-group-text">Email Address:</span>
                     </div>
                     <input class="form-control" type="text" placeholder="<?= $user['email'] ?>" readonly>
                 </div>
                 <div class="input-group p-0 mt-3 mb-3 col-12 col-md-8">
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">Adminstrator?:</span>
+                        <span class="input-group-text">Adminstrator?:</span>
                     </div>
                     <input class="form-control" type="text"
                         placeholder="<?php if ($user['isAdmin'] === 1): ?>True<?php else: ?>False<?php endif ?>"
                         readonly>
                 </div>
-                <a class="btn btn-secondary role=" button"
-                    href="manageUserProcess.php?id=<?= $user['userID'] ?>">Edit</a>
-            </div id="<?= $user['userID'] ?>">
+                <a class="btn btn-secondary" href="manageUserProcess.php?id=<?= $user['userID'] ?>">Edit</a>
+            </div>
             <?php endforeach ?>
             <?php endif ?>
         </div>

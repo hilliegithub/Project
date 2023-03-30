@@ -92,7 +92,7 @@ try {
                 <?php foreach ($posts as $post): ?>
                 <div class="card m-2 mx-auto" style="width: 18rem;">
                     <?php if ($post['image_url']): ?>
-                    <img class="card-img-top" src=<?= $post['image_url'] ?> alt="<?= $post['make'] ?>" width="300px">
+                    <img class="card-img-top" src=<?= $post['image_url'] ?> alt="<?= $post['make'] ?>">
                     <?php endif ?>
                     <div class="card-body">
                         <h5 class="card-title">
@@ -115,7 +115,7 @@ try {
                                 Edit This Post
                             </a></p>
                         <?php endif ?>
-                        <a class="card-link" href="post.php?id=<?= $post['id'] ?>">
+                        <a class="card-link ml-2" href="post.php?id=<?= $post['id'] ?>">
                             View This Post
                         </a>
                     </div>

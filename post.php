@@ -84,7 +84,7 @@ try {
             <?php endif ?>
             <div class="input-group p-0 mt-3 mb-3 col-12 col-md-6">
                 <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-addon1">Make:</span>
+                    <span class="input-group-text">Make:</span>
                 </div>
                 <!-- <input type="text" class="form-control" placeholder="Username" aria-label="Username"
                                                                                                                                                                                                                                                                                                                                 aria-describedby="basic-addon1"> -->
@@ -100,7 +100,7 @@ try {
             </div>
             <div class="input-group p-0 mb-3 col-12 col-md-6">
                 <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-addon1">Year:</span>
+                    <span class="input-group-text">Year:</span>
                 </div>
                 <!-- <input type="text" class="form-control" placeholder="Username" aria-label="Username"
                                                                                                                                                                                                                                                 aria-describedby="basic-addon1"> -->
@@ -108,7 +108,7 @@ try {
             </div>
             <div class="input-group p-0 mb-3 col-12 col-md-6">
                 <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-addon1">Engine:</span>
+                    <span class="input-group-text">Engine:</span>
                 </div>
                 <!-- <input type="text" class="form-control" placeholder="Username" aria-label="Username"
                                                                                                                             aria-describedby="basic-addon1"> -->
@@ -171,13 +171,13 @@ try {
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
-                                    <input type="checkbox" class="form-control" id="makehidden" name="makehidden"
+                                    <input type="checkbox" class="form-control" name="makehidden"
                                         data-commentid="<?= $comment['commentID'] ?>"
                                         <?= $comment['hidden'] === 1 ? 'checked' : '' ?>>
                                 </div>
                             </div>
 
-                            <label for="makehidden" class="form-control">Hide Visibility?</label>
+                            <label class="form-control">Hide Visibility?</label>
                         </div>
                         <?php endif ?>
                         <button class="btn btn-outline-danger btn-sm mt-2" data-btn-id="<?= $comment['commentID'] ?>"
@@ -205,13 +205,13 @@ try {
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
-                                    <input type="checkbox" class="form-control" id="makehidden" name="makehidden"
+                                    <input type="checkbox" class="form-control" name="makehidden"
                                         data-commentid="<?= $comment['commentID'] ?>"
                                         <?= $comment['hidden'] === 1 ? 'checked' : '' ?>>
                                 </div>
                             </div>
 
-                            <label for="makehidden" class="form-control">Hide Visibility?</label>
+                            <label class="form-control">Hide Visibility?</label>
                         </div>
                         <?php endif ?>
                         <?php if (isset($_SESSION['user_id']) && ($_SESSION['isAdmin'] === 1)): ?>

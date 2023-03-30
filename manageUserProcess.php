@@ -217,16 +217,16 @@ try {
                         <li class="passwordlist"> -->
                 <div class="form-row passwordlist">
                     <div class="form-group col-12 col-md-6">
+                        <label for="confirmpassword">Confirm Password</label>
+                        <input type="password" class="form-control" id="confirmpassword" placeholder="Password"
+                            name="confirmpassword">
                     </div>
-                    <label for="confirmpassword">Confirm Password</label>
-                    <input type="password" class="form-control" id="confirmpassword" placeholder="Password"
-                        name="confirmpassword">
                 </div>
                 <!-- <li> -->
                 <div class="form-row mt-3">
-                    <button class="btn btn-secondary mr-2" id="submit" name="submit" type="submit" value="update"
+                    <button class="btn btn-secondary mr-2" name="submit" type="submit" value="update"
                         onclick="confirm('Are you sure you wish make these changes?')">Update</button>
-                    <button class="btn btn-danger" id="submit" name="submit" type="submit" value="remove"
+                    <button class="btn btn-danger" name="submit" type="submit" value="remove"
                         onclick="confirm('Are you sure you wish to delete <?= $user['username'] ?>?')">Delete</button>
                 </div>
                 <!-- </li>
