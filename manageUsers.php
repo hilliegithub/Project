@@ -73,6 +73,7 @@ try {
         <div class="container mt-2">
             <?php if (isset($users)): ?>
             <h1>Manage All Users</h1>
+            <a class="btn btn-secondary btn-sm" href="adminCreateUser.php">Create User</a>
             <?php foreach ($users as $user): ?>
             <div class="p-2 m-4" style="border-bottom: 1px solid black;">
 
