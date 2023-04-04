@@ -140,7 +140,7 @@ try {
     </title>
 </head>
 
-<body>
+<body class="hmm">
     <main>
         <?php include("navigation.php") ?>
         <?php if ($processingError): ?>
@@ -149,7 +149,7 @@ try {
             <p><a class="alert-link" href="index.php">Back To Home Page</a></p>
         </div>
         <?php else: ?>
-        <div class="container mt-2">
+        <div class="container mt-2 pb-2 bg-white">
             <h2>Edit
                 <?= $user['username'] ?>'s Record
             </h2>

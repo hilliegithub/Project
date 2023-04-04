@@ -25,10 +25,11 @@ if (!isset($_SESSION['user_id'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles/styles.css?1">
     <title>Create a Bike Post</title>
 </head>
 
-<body>
+<body class="hmm">
     <main>
         <?php if ($loginMessage): ?>
         <div class="alert alert-success alert-dismissible fade show mb-0" role="alert">
@@ -48,7 +49,7 @@ if (!isset($_SESSION['user_id'])) {
                     <div class="form-row">
                         <div class="form-group col-12 col-md-6">
 
-                            <label for="make">Bike Make</label>
+                            <label for="make" class="text-white">Bike Make</label>
                             <input id="make" name="make" type="text" class="form-control" required
                                 maxlength="<?= BIKEMAKE_MAX_LENGTH ?>">
                         </div>
@@ -56,7 +57,7 @@ if (!isset($_SESSION['user_id'])) {
 
                     <div class="form-row">
                         <div class="form-group col-12 col-md-6">
-                            <label for="model">Bike Model</label>
+                            <label for="model" class="text-white">Bike Model</label>
                             <input id="model" name="model" class="form-control" type="text" required
                                 maxlength="<?= BIKEMODEL_MAX_LENGTH ?>">
                         </div>
@@ -65,7 +66,7 @@ if (!isset($_SESSION['user_id'])) {
 
                     <div class="form-row">
                         <div class="form-group col-12 col-md-6">
-                            <label for="engine">Engine</label>
+                            <label for="engine" class="text-white">Engine</label>
                             <input id="engine" name="engine" type="text" class="form-control" required
                                 maxlength="<?= BIKE_ENGINE_MAX_LENGTH ?>">
                         </div>
@@ -73,7 +74,7 @@ if (!isset($_SESSION['user_id'])) {
 
                     <div class="form-row">
                         <div class="form-group col-12 col-md-6">
-                            <label for="year">Year</label>
+                            <label for="year" class="text-white">Year</label>
                             <input id="year" name="year" class="form-control" type="number" min="1900" max="2099"
                                 required>
                         </div>
@@ -82,14 +83,14 @@ if (!isset($_SESSION['user_id'])) {
 
                     <div class="form-row">
                         <div class="form-group col-12 col-md-6">
-                            <label for="displacement">Displacement (ccm)</label>
+                            <label for="displacement" class="text-white">Displacement (ccm)</label>
                             <input id="displacement" name="displacement" class="form-control" type="text" required>
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group col-12 col-md-6">
-                            <label>Choose file:</label>
+                            <label class="text-white">Choose file:</label>
                             <div class="input-group">
                                 <div class="custom-file">
                                     <input id="image" name="image" class="custom-file-input" type="file"

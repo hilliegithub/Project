@@ -53,10 +53,11 @@ function getPostList($option, $obj)
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles/styles.css?1">
     <title>All Motorcycle Posts</title>
 </head>
 
-<body>
+<body class="hmm">
     <main>
         <?php if ($loginMessage): ?>
         <div class="alert alert-success alert-dismissible fade show mb-0" role="alert">
@@ -68,9 +69,9 @@ function getPostList($option, $obj)
         <?php endif ?>
         <?php include("navigation.php") ?>
         <div class="container mt-2">
-            <h2>Bike Posts</h2>
+            <h2 class="text-white">Bike Posts</h2>
             <?php if (isset($_SESSION['user_id'])): ?>
-            <div class="d-flex justify-content-center">
+            <div class="d-flex justify-content-center text-white">
                 <p class="sort mr-2">Sort By:</p>
                 <form class="d-inline-flex">
                     <div class="mr-3">

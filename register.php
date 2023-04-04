@@ -83,10 +83,11 @@ try {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="styles/register.css?1">
+    <link rel="stylesheet" href="styles/styles.css?1">
     <title>Register Now</title>
 </head>
 
-<body>
+<body class="hmm">
     <main>
         <?php if ($processingError): ?>
         <div class="alert alert-danger" role="alert">
@@ -94,7 +95,7 @@ try {
         </div>
         <?php endif ?>
         <?php include("navigation.php") ?>
-        <div class="container">
+        <div class="container mt-2 bg-white">
             <h2>User Sign Up</h2>
             <div class="username-available alert alert-primary col-md-6" role="alert">
                 Username is available. Please continue to fill out the form.
