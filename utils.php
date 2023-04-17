@@ -13,6 +13,8 @@ function deleteFile($file)
 
 function getImageUrl($image_name, $image_tmp_name)
 {
+    $trimmed = preg_replace('/\s+/', '', $image_name);
+    $image_storageFld = get_image_original(basename($trimmed));
     $image_storageFld = get_image_original(basename($image_name));
     if (file_is_an_image($image_tmp_name, $image_storageFld)) {
         // move_uploaded_file($image_tmp_name, $image_storageFld);
